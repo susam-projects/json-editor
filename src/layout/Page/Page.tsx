@@ -9,5 +9,5 @@ interface IPageProps {
 export const Page: React.FC<IPageProps> = ({ children }) => {
 	const { styles } = useStyles();
 
-	return <Layout.Content className={styles.wrapper}>{children}</Layout.Content>;
+	return <Layout.Content className={styles.pageRoot}>{children}</Layout.Content>;
 };

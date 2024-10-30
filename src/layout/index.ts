@@ -1,1 +1,1 @@
-export { Page } from './page/Page.tsx';
+export { Page } from './Page/Page.tsx';

@@ -5,5 +5,5 @@ interface IEditorProps {
 }
 
 export const Editor: React.FC<IEditorProps> = () => {
-	return <div>Test</div>;
+	return <div style={{ border: '1px solid grey', height: '300px' }}>Test</div>;
 };
