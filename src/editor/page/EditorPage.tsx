@@ -1,6 +1,6 @@
 import React from 'react';
 import { Editor } from '../components/Editor/Editor.tsx';
-import { Button, Typography } from 'antd';
+import { Button, Space, Typography } from 'antd';
 import { Page } from '../../layout';
 import { useStyles } from './EditorPage.styles.ts';
 import { textEn } from '../../text';
@@ -18,6 +18,10 @@ const useJsonData = () => {
 		setIsSetDataModalOpen(false);
 	};
 
+	const handleSetDataCancel = () => {
+		closeSetDataModal();
+	};
+
 	const handleSetData = (newData: string) => {
 		try {
 			const newDataObject = JSON.parse(newData);
@@ -32,7 +36,7 @@ const useJsonData = () => {
 		data,
 		isSetDataModalOpen,
 		openSetDataModal,
-		closeSetDataModal,
+		handleSetDataCancel,
 		handleSetData,
 	};
 };
@@ -43,16 +47,18 @@ export const EditorPage: React.FC = () => {
 	const {
 		isSetDataModalOpen,
 		openSetDataModal,
-		closeSetDataModal,
+		handleSetDataCancel,
 		handleSetData,
 	} = useJsonData();
 
 	return (
 		<Page>
-			<Typography.Title className={styles.title}>{textEn.editorPage.title}</Typography.Title>
-			<Button type="primary" className={styles.dataButton} onClick={openSetDataModal}>{textEn.editorPage.setDataButton}</Button>
-			<Editor />
-			<SetDataModal isOpen={isSetDataModalOpen} onOk={handleSetData} onCancel={closeSetDataModal} />
+			<Space direction="vertical" size="large" className={styles.wrapper}>
+				<Typography.Title className={styles.title}>{textEn.editorPage.title}</Typography.Title>
+				<Button type="primary" onClick={openSetDataModal}>{textEn.editorPage.setDataButton}</Button>
+				<Editor />
+			</Space>
+			<SetDataModal isOpen={isSetDataModalOpen} onOk={handleSetData} onCancel={handleSetDataCancel} />
 		</Page>
 	);
 };
