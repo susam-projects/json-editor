@@ -1,6 +1,19 @@
+import dayjs from 'dayjs';
+
+export const enum FieldType {
+  Id,
+  String,
+  Number,
+  Email,
+  Date,
+  Boolean,
+  Text,
+}
+
 export interface IFieldInfo<T> {
   label: string;
   value: T;
+  type: FieldType;
 }
 
 export const isId = (field: IFieldInfo<unknown>) => {
@@ -16,15 +29,17 @@ export const isString = (field: IFieldInfo<unknown>) => {
 };
 
 export const isNumber = (field: IFieldInfo<unknown>) => {
-	return !Number.isNaN(Number(field.value));
+	return typeof field.value === 'number' && !Number.isNaN(field.value);
 };
 
+// const EMAIL_REGEXP = /^(([^<>()[\].,;:\s@"]+(.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+const SIMPLE_EMAIL_REGEXP = /\S+@\S+\.\S+/;
 export const isEmail = (field: IFieldInfo<unknown>) => {
-	return false;
+	return SIMPLE_EMAIL_REGEXP.test(String(field.value));
 };
 
 export const isDate = (field: IFieldInfo<unknown>) => {
-	return false;
+	return dayjs(String(field.value)).isValid();
 };
 
 export const isBoolean = (field: IFieldInfo<unknown>) => {

@@ -1,9 +1,11 @@
 import React from 'react';
 import { useStyles } from './Editor.styles.ts';
 import { Collapse } from 'antd';
-import { EditorField } from './EditorField/EditorField.tsx';
+import { EditorField } from '../EditorField/EditorField.tsx';
+import { FieldType } from '../../service/fieldTypes.service.ts';
+import { EditorRow } from '../EditorRow/EditorRow.tsx';
 
-import jsonSample from './json-sample.json';
+import jsonSample from '../../data/json-sample.json';
 
 interface IEditorProps {
   view: ViewType;
@@ -27,22 +29,25 @@ const items: TCollapseItems = [
 		key: '1',
 		label: '1 (213231-asdfdsf34-3dfd34-343fdf)',
 		children: (
-			<p>
-				<EditorField label="id" value="some-id-id-id" />
-				<EditorField label="string" value="string value" />
-				<EditorField label="number" value="321" />
-				<EditorField label="email" value="some@email.com" />
-				<EditorField label="date" value="11-01-2024" />
-				<EditorField label="boolean" value="false" />
+			<EditorRow>
+				<EditorField field={{ label: 'id', value: 'some-id-id-id', type: FieldType.Id }} />
+				<EditorField field={{ label: 'string', value: 'string value', type: FieldType.String }} />
+				<EditorField field={{ label: 'number', value: 321, type: FieldType.Number }} />
+				<EditorField field={{ label: 'email', value: 'some@email.com', type: FieldType.Email }} />
+				<EditorField field={{ label: 'date', value: '11-01-2024', type: FieldType.Date }} />
+				<EditorField field={{ label: 'boolean', value: false, type: FieldType.Boolean }} />
 				<EditorField
-					label="text"
-					value={`
+					field={{
+						label: 'text',
+						type: FieldType.Id,
+						value: `
   A dog is a type of domesticated animal.
   Known for its loyalty and faithfulness,
   it can be found as a welcome guest in many households across the world.
-          `}
+          `,
+					}}
 				/>
-			</p>
+			</EditorRow>
 		),
 	},
 	{
@@ -56,6 +61,8 @@ const items: TCollapseItems = [
 		children: <p>{text}</p>,
 	},
 ];
+
+// check type once, not on rerender
 
 console.log(jsonSample);
 
