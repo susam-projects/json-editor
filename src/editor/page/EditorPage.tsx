@@ -81,8 +81,11 @@ export const EditorPage: React.FC = () => {
 
 	return (
 		<Page>
-			<Space direction="vertical" size="large" className={styles.wrapper}>
-				<Typography.Title className={styles.title}>{textEn.editorPage.title}</Typography.Title>
+			<Space direction="vertical" size="large" className={styles.verticalSpace}>
+				<Space direction="vertical" size="small" className={styles.verticalSpace}>
+					<Typography.Title className={styles.title}>{textEn.editorPage.title}</Typography.Title>
+					<Typography.Text className={styles.subtitle}>{textEn.editorPage.subTitle}</Typography.Text>
+				</Space>
 				<Space size="large">
 					<Button type="primary" onClick={openSetDataModal}>{textEn.editorPage.setDataButton}</Button>
 					<Segmented value={viewType} onChange={handleViewTypeChange} options={VIEW_TYPE_OPTIONS} />
