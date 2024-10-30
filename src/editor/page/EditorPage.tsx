@@ -1,6 +1,8 @@
 import React from 'react';
-import { Editor } from '../components/Editor/Editor.tsx';
-import { Button, Space, Typography } from 'antd';
+import { Editor, ViewType } from '../components/Editor/Editor.tsx';
+import {
+	Button, Segmented, Space, Typography,
+} from 'antd';
 import { Page } from '../../layout';
 import { useStyles } from './EditorPage.styles.ts';
 import { textEn } from '../../text';
@@ -41,6 +43,27 @@ const useJsonData = () => {
 	};
 };
 
+type TSegmentedOptions = React.ComponentProps<typeof Segmented<ViewType>>['options'];
+type TSegmentedOnChange = React.ComponentProps<typeof Segmented<ViewType>>['onChange'];
+
+const VIEW_TYPE_OPTIONS: TSegmentedOptions = [
+	{ label: 'Collapse view', value: ViewType.Collapse },
+	{ label: 'Table view', value: ViewType.Table },
+];
+
+const useEditorViewType = () => {
+	const [viewType, setViewType] = React.useState(ViewType.Collapse);
+
+	const handleViewTypeChange: TSegmentedOnChange = (value) => {
+		setViewType(value);
+	};
+
+	return {
+		viewType,
+		handleViewTypeChange,
+	};
+};
+
 export const EditorPage: React.FC = () => {
 	const { styles } = useStyles();
 
@@ -51,12 +74,20 @@ export const EditorPage: React.FC = () => {
 		handleSetData,
 	} = useJsonData();
 
+	const {
+		viewType,
+		handleViewTypeChange,
+	} = useEditorViewType();
+
 	return (
 		<Page>
 			<Space direction="vertical" size="large" className={styles.wrapper}>
 				<Typography.Title className={styles.title}>{textEn.editorPage.title}</Typography.Title>
-				<Button type="primary" onClick={openSetDataModal}>{textEn.editorPage.setDataButton}</Button>
-				<Editor />
+				<Space size="large">
+					<Button type="primary" onClick={openSetDataModal}>{textEn.editorPage.setDataButton}</Button>
+					<Segmented value={viewType} onChange={handleViewTypeChange} options={VIEW_TYPE_OPTIONS} />
+				</Space>
+				<Editor view={viewType} />
 			</Space>
 			<SetDataModal isOpen={isSetDataModalOpen} onOk={handleSetData} onCancel={handleSetDataCancel} />
 		</Page>
