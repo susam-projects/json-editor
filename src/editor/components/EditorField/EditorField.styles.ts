@@ -18,6 +18,7 @@ export const useStyles = createStyles(({ css, token }) => ({
 
 	editIcon: css`
     cursor: pointer;
+    text-align: right;
   `,
 
 	applyIcon: css`
