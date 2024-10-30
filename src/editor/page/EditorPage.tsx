@@ -25,6 +25,7 @@ const useJsonData = () => {
 		} catch {
 			// do nothing in this case
 		}
+		closeSetDataModal();
 	};
 
 	return {
