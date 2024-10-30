@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Input, Modal } from 'antd';
 import { textEn } from '../../../text';
 
@@ -10,8 +10,17 @@ interface ISetDataModalProps {
 
 type TOnChange = React.ComponentProps<typeof Input.TextArea>['onChange'];
 
+const INPUT_PLACEHOLDER = `[
+  { "sample": "value" },
+  { "another": "value" }
+]`;
+
 export const SetDataModal: React.FC<ISetDataModalProps> = ({ isOpen, onOk, onCancel }) => {
 	const [inputValue, setInputValue] = React.useState('');
+
+	useEffect(() => {
+		setInputValue('');
+	}, [isOpen]);
 
 	const handleInputChange: TOnChange = (event) => {
 		setInputValue(event.target.value);
@@ -19,12 +28,6 @@ export const SetDataModal: React.FC<ISetDataModalProps> = ({ isOpen, onOk, onCan
 
 	const handleOk = () => {
 		onOk(inputValue);
-		setInputValue('');
-	};
-
-	const handleCancel = () => {
-		onCancel();
-		setInputValue('');
 	};
 
 	return (
@@ -34,9 +37,14 @@ export const SetDataModal: React.FC<ISetDataModalProps> = ({ isOpen, onOk, onCan
 			cancelText={textEn.app.cancel}
 			open={isOpen}
 			onOk={handleOk}
-			onCancel={handleCancel}
+			onCancel={onCancel}
 		>
-			<Input.TextArea rows={16} value={inputValue} onChange={handleInputChange} />
+			<Input.TextArea
+				rows={16}
+				placeholder={INPUT_PLACEHOLDER}
+				value={inputValue}
+				onChange={handleInputChange}
+			/>
 		</Modal>
 	);
 };
