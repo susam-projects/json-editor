@@ -8,6 +8,10 @@ export const textEn = {
 		subTitle: 'Note: By default a hardcoded JSON is used. You can set any other one with the "Set JSON" button.',
 		setDataButton: 'Set JSON',
 		setDataModalTitle: 'Input JSON',
+		setDataPlaceholder: `[
+  { "sample": "value" },
+  { "another": "value" }
+]`,
 		error: {
 			errorParsingData: 'Error parsing data!',
 		},

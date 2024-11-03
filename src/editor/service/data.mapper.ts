@@ -78,7 +78,10 @@ const isNumber = (line: LineInfo) => {
 	return typeof line.value === 'number' && !Number.isNaN(line.value);
 };
 
-// const EMAIL_REGEXP = /^(([^<>()[\].,;:\s@"]+(.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+// was also thinking about variant:
+// /^(([^<>()[\].,;:\s@"]+(.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+// but decided to go with the simplest one
+// the main drawback in performance is not the data processing anyway
 const SIMPLE_EMAIL_REGEXP = /\S+@\S+\.\S+/;
 const isEmail = (line: LineInfo) => {
 	return SIMPLE_EMAIL_REGEXP.test(String(line.value));

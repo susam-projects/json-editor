@@ -5,6 +5,7 @@ export const useStyles = createStyles(({ css, token }) => ({
     table-layout: fixed;
     width: 100%;
 
+    /* all table styles are here because repeated usage of 'useStyles' has a drastic performance effect */
     .editor-table {
       &__label-column {
         width: 200px;
