@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { Input, Modal } from 'antd';
 import { textEn } from '../../../text';
 
-interface SetDataModalProps {
+type SetDataModalProps = {
   isOpen: boolean;
   onOk: (data: string) => void;
   onCancel: () => void;
-}
+};
 
 type TOnChange = React.ComponentProps<typeof Input.TextArea>['onChange'];
 

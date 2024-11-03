@@ -1,7 +1,7 @@
 import React from 'react';
 import { WithChildren } from '../../../../utils/utilityTypes.ts';
 
-type EditorRowProps = WithChildren
+type EditorRowProps = WithChildren;
 
 export const EditorTableRow: React.FC<EditorRowProps> = ({ children }) => {
 	return (

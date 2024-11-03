@@ -12,9 +12,9 @@ import {
 	TextLine,
 } from '../EditorTableLines';
 
-interface EditorLineProps {
+type EditorLineProps = {
   data: EditorDataLine
-}
+};
 
 export const EditorTableLine: React.FC<EditorLineProps> = ({ data }) => {
 	if (!data.isVisible) {

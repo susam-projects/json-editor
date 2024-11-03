@@ -1,7 +1,7 @@
 import React from 'react';
 import { WithChildren } from '../../../../../../utils/utilityTypes.ts';
 
-type EditLineWrapperProps = WithChildren
+type EditLineWrapperProps = WithChildren;
 
 export const EditLineWrapper: React.FC<EditLineWrapperProps> = ({ children }) => {
 	return (

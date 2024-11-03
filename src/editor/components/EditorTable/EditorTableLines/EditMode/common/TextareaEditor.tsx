@@ -1,11 +1,11 @@
 import React from 'react';
 import { textEn } from '../../../../../../text';
 
-interface TextareaEditorProps {
+type TextareaEditorProps = {
   editValue: string;
   onInputChange: React.ChangeEventHandler<HTMLTextAreaElement>;
   onInputKeyDown: React.KeyboardEventHandler<HTMLTextAreaElement>;
-}
+};
 
 export const TextareaEditor: React.FC<TextareaEditorProps> = ({
 	editValue, onInputKeyDown, onInputChange,

@@ -1,8 +1,9 @@
 import React from 'react';
 
-interface EditLineLabelProps {
+type EditLineLabelProps = {
   label: string;
-}
+};
+
 export const EditLineLabel: React.FC<EditLineLabelProps> = ({ label }) => {
-	return <td>{label}</td>;
+	return <td className="editor-table__field__label">{label}</td>;
 };

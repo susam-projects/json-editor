@@ -3,10 +3,10 @@ import React from 'react';
 import { textEn } from '../../../../../../text';
 import { Radio } from 'antd';
 
-interface BooleanEditorProps {
+type BooleanEditorProps = {
   editValue: string;
   onInputChange: RadioGroupOnChange;
-}
+};
 
 export const BooleanEditor: React.FC<BooleanEditorProps> = ({ editValue, onInputChange }) => {
 	return (

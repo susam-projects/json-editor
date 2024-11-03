@@ -35,6 +35,11 @@ export const useStyles = createStyles(({ css, token }) => ({
           display: none;
         }
 
+							&__label {
+								overflow: hidden;
+								text-overflow: ellipsis;
+							}
+
         &__value {
           padding: ${token.paddingXS}px ${token.padding}px;
         }

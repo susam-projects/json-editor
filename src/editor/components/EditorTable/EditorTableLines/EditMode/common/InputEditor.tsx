@@ -1,12 +1,12 @@
 import React, { HTMLInputTypeAttribute } from 'react';
 import { textEn } from '../../../../../../text';
 
-interface InputEditorProps {
+type InputEditorProps = {
   inputType: HTMLInputTypeAttribute;
   editValue: string;
   onInputChange: React.ChangeEventHandler<HTMLInputElement>;
   onInputKeyDown: React.KeyboardEventHandler<HTMLInputElement>;
-}
+};
 
 export const InputEditor: React.FC<InputEditorProps> = ({
 	inputType, editValue, onInputKeyDown, onInputChange,

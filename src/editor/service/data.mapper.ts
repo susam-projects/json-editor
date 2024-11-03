@@ -30,10 +30,10 @@ export const objectsToEditorData = (objects: Array<Record<string, unknown>>): Ed
 	}).filter(row => !!row.length); // skip empty rows
 };
 
-interface LineInfo {
+type LineInfo = {
   label: string;
   value: unknown;
-}
+};
 
 const getLineType = (label: string, value: unknown): EditorDataLineType => {
 	const lineInfo: LineInfo = { label, value };
