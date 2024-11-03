@@ -4,13 +4,13 @@ import {
 	EditorDataLineType,
 } from '../../../types/EditorData.ts';
 import {
-	BooleanField,
-	DateField,
-	EmailField,
-	NumberField,
-	StringField,
-	TextField,
-} from '../EditorTableFields/EditorTableFields.tsx';
+	BooleanLine,
+	DateLine,
+	EmailLine,
+	NumberLine,
+	StringLine,
+	TextLine,
+} from '../EditorTableLines';
 
 interface EditorLineProps {
   data: EditorDataLine
@@ -21,24 +21,25 @@ export const EditorTableLine: React.FC<EditorLineProps> = ({ data }) => {
 		return null;
 	}
 
+	// unlike a map, switch allows to specify exact data types
 	switch (data.type) {
 	case EditorDataLineType.String:
-		return <StringField data={data as EditorDataLine<string>} />;
+		return <StringLine data={data as EditorDataLine<string>} />;
 
 	case EditorDataLineType.Number:
-		return <NumberField data={data as EditorDataLine<number>} />;
+		return <NumberLine data={data as EditorDataLine<number>} />;
 
 	case EditorDataLineType.Email:
-		return <EmailField data={data as EditorDataLine<string>} />;
+		return <EmailLine data={data as EditorDataLine<string>} />;
 
 	case EditorDataLineType.Date:
-		return <DateField data={data as EditorDataLine<string>} />;
+		return <DateLine data={data as EditorDataLine<string>} />;
 
 	case EditorDataLineType.Boolean:
-		return <BooleanField data={data as EditorDataLine<boolean>} />;
+		return <BooleanLine data={data as EditorDataLine<boolean>} />;
 
 	case EditorDataLineType.Text:
-		return <TextField data={data as EditorDataLine<string>} />;
+		return <TextLine data={data as EditorDataLine<string>} />;
 
 	case EditorDataLineType.Id:
 	case EditorDataLineType.Unknown:

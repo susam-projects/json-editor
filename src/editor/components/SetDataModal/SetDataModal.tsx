@@ -10,11 +10,6 @@ interface SetDataModalProps {
 
 type TOnChange = React.ComponentProps<typeof Input.TextArea>['onChange'];
 
-const INPUT_PLACEHOLDER = `[
-  { "sample": "value" },
-  { "another": "value" }
-]`;
-
 export const SetDataModal: React.FC<SetDataModalProps> = ({ isOpen, onOk, onCancel }) => {
 	const [inputValue, setInputValue] = React.useState('');
 
@@ -41,7 +36,7 @@ export const SetDataModal: React.FC<SetDataModalProps> = ({ isOpen, onOk, onCanc
 		>
 			<Input.TextArea
 				rows={16}
-				placeholder={INPUT_PLACEHOLDER}
+				placeholder={textEn.editorPage.setDataPlaceholder}
 				value={inputValue}
 				onChange={handleInputChange}
 			/>

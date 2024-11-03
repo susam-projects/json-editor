@@ -1,4 +1,4 @@
-import { EditorLineValue } from '../../../types/EditorData.ts';
+import { EditorLineValue } from '../../../../types/EditorData.ts';
 import React from 'react';
 import { FormOutlined } from '@ant-design/icons';
 
@@ -8,7 +8,7 @@ interface ReadModeFieldProps {
   onEditClick?: () => void;
 }
 
-export const ReadModeField: React.FC<ReadModeFieldProps> = ({
+export const ReadModeLine: React.FC<ReadModeFieldProps> = ({
 	label, value, onEditClick,
 }) => {
 	return (
@@ -22,6 +22,6 @@ export const ReadModeField: React.FC<ReadModeFieldProps> = ({
 	);
 };
 
-ReadModeField.defaultProps = {
+ReadModeLine.defaultProps = {
 	onEditClick: undefined,
 };
