@@ -3,7 +3,7 @@ import { WithChildren } from '../../../../utils/utilityTypes.ts';
 import { useStyles } from '../EditorTable.styles.ts';
 import { textEn } from '../../../../text';
 
-type EditorTableProps = WithChildren
+type EditorTableProps = WithChildren;
 
 export const EditorTable: React.FC<EditorTableProps> = ({ children }) => {
 	const { styles } = useStyles();

@@ -2,10 +2,10 @@ import React from 'react';
 import { Space } from 'antd';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 
-interface EditControlsProps {
+type EditControlsProps = {
   onApply: () => void;
   onCancel: () => void;
-}
+};
 
 export const EditControls: React.FC<EditControlsProps> = ({ onApply, onCancel }) => {
 	return (

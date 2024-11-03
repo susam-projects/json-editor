@@ -8,9 +8,9 @@ import {
 } from '../../types/EditorData.ts';
 import { EditorTable } from '../EditorTable/EditorTable/EditorTable.tsx';
 
-interface EditorProps {
+type EditorProps = {
   data: EditorData;
-}
+};
 
 const getRowKey = (row: EditorDataRow, i: number) => {
 	return `${row[0]?.value} ${i}`;
