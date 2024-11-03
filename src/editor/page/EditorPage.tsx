@@ -1,15 +1,15 @@
 import React from 'react';
-import { Editor, ViewType } from '../components/Editor/Editor.tsx';
-import {
-	Button, Segmented, Space, Typography,
-} from 'antd';
+import { Editor } from '../components/Editor/Editor.tsx';
+import { Button, Space, Typography } from 'antd';
 import { Page } from '../../layout';
 import { useStyles } from './EditorPage.styles.ts';
 import { textEn } from '../../text';
 import { SetDataModal } from '../components/SetDataModal/SetDataModal.tsx';
+import { objectsToEditorData } from '../service/data.mapper.ts';
+import jsonSample from '../data/json-sample.json';
 
 const useJsonData = () => {
-	const [data, setData] = React.useState([]);
+	const [data, setData] = React.useState(objectsToEditorData(jsonSample));
 	const [isSetDataModalOpen, setIsSetDataModalOpen] = React.useState(false);
 
 	const openSetDataModal = () => {
@@ -26,10 +26,15 @@ const useJsonData = () => {
 
 	const handleSetData = (newData: string) => {
 		try {
-			const newDataObject = JSON.parse(newData);
-			setData(newDataObject);
-		} catch {
-			// do nothing in this case
+			const newDataObjects = JSON.parse(newData);
+			if (Array.isArray(newDataObjects)) {
+				const newEditorData = objectsToEditorData(newDataObjects);
+				setData(newEditorData);
+			}
+		} catch (err) {
+			// to be able to debug the user JSON
+			// eslint-disable-next-line no-console
+			console.error(textEn.editorPage.error.errorParsingData, err);
 		}
 		closeSetDataModal();
 	};
@@ -43,41 +48,16 @@ const useJsonData = () => {
 	};
 };
 
-type TSegmentedOptions = React.ComponentProps<typeof Segmented<ViewType>>['options'];
-type TSegmentedOnChange = React.ComponentProps<typeof Segmented<ViewType>>['onChange'];
-
-const VIEW_TYPE_OPTIONS: TSegmentedOptions = [
-	{ label: 'Collapse view', value: ViewType.Collapse },
-	{ label: 'Table view', value: ViewType.Table },
-];
-
-const useEditorViewType = () => {
-	const [viewType, setViewType] = React.useState(ViewType.Collapse);
-
-	const handleViewTypeChange: TSegmentedOnChange = (value) => {
-		setViewType(value);
-	};
-
-	return {
-		viewType,
-		handleViewTypeChange,
-	};
-};
-
 export const EditorPage: React.FC = () => {
 	const { styles } = useStyles();
 
 	const {
+		data,
 		isSetDataModalOpen,
 		openSetDataModal,
 		handleSetDataCancel,
 		handleSetData,
 	} = useJsonData();
-
-	const {
-		viewType,
-		handleViewTypeChange,
-	} = useEditorViewType();
 
 	return (
 		<Page>
@@ -86,11 +66,8 @@ export const EditorPage: React.FC = () => {
 					<Typography.Title className={styles.title}>{textEn.editorPage.title}</Typography.Title>
 					<Typography.Text className={styles.subtitle}>{textEn.editorPage.subTitle}</Typography.Text>
 				</Space>
-				<Space size="large">
-					<Button type="primary" onClick={openSetDataModal}>{textEn.editorPage.setDataButton}</Button>
-					<Segmented value={viewType} onChange={handleViewTypeChange} options={VIEW_TYPE_OPTIONS} />
-				</Space>
-				<Editor view={viewType} />
+				<Button type="primary" onClick={openSetDataModal}>{textEn.editorPage.setDataButton}</Button>
+				<Editor data={data} />
 			</Space>
 			<SetDataModal isOpen={isSetDataModalOpen} onOk={handleSetData} onCancel={handleSetDataCancel} />
 		</Page>

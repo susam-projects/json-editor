@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Input, Modal } from 'antd';
 import { textEn } from '../../../text';
 
-interface ISetDataModalProps {
+interface SetDataModalProps {
   isOpen: boolean;
   onOk: (data: string) => void;
   onCancel: () => void;
@@ -15,7 +15,7 @@ const INPUT_PLACEHOLDER = `[
   { "another": "value" }
 ]`;
 
-export const SetDataModal: React.FC<ISetDataModalProps> = ({ isOpen, onOk, onCancel }) => {
+export const SetDataModal: React.FC<SetDataModalProps> = ({ isOpen, onOk, onCancel }) => {
 	const [inputValue, setInputValue] = React.useState('');
 
 	useEffect(() => {
