@@ -5,11 +5,19 @@ export const textEn = {
 	},
 	editorPage: {
 		title: 'JSON Editor',
-		subTitle: 'Note: by default a hardcoded JSON is used, you can set any other one with the "Set JSON" button',
+		subTitle: 'Note: By default a hardcoded JSON is used. You can set any other one with the "Set JSON" button.',
 		setDataButton: 'Set JSON',
 		setDataModalTitle: 'Input JSON',
 		error: {
 			errorParsingData: 'Error parsing data!',
+		},
+		editorTable: {
+			labelColumn: 'label column',
+			valueColumn: 'value column',
+			buttonsColumn: 'buttons column',
+			lineInputLabel: 'input cell',
+			booleanTrue: 'True',
+			booleanFalse: 'False',
 		},
 	},
 };
