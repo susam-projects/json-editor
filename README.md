@@ -18,7 +18,7 @@ To start dev server:
 npm run dev
 ```
 
-The server would be accessible on:
+The server will be accessible on:
 ```
 http://localhost:5173
 ```
@@ -35,7 +35,7 @@ To start prod preview server:
 npm run preview
 ```
 
-The server would be accessible on:
+The server will be accessible on:
 ```
 http://localhost:4173
 ```
