@@ -14,6 +14,7 @@ export type EditLineProps<T> = {
   isEdit: boolean;
   onApply: (newValue: T) => void;
   onCancel: () => void;
+	onDelete: () => void;
 };
 
 export type StringInputElement = HTMLInputElement | HTMLTextAreaElement;

@@ -14,6 +14,7 @@ export const EditEmailLine: React.FC<EditEmailFieldProps> = ({
 	isEdit,
 	onApply,
 	onCancel,
+	onDelete,
 }) => {
 	const {
 		editValue,
@@ -31,7 +32,7 @@ export const EditEmailLine: React.FC<EditEmailFieldProps> = ({
 				onInputChange={handleInputChange}
 				onInputKeyDown={handleInputKeyDown}
 			/>
-			<EditControls onApply={handleApply} onCancel={onCancel} />
+			<EditControls onApply={handleApply} onCancel={onCancel} onDelete={onDelete} />
 		</EditLineWrapper>
 	);
 };

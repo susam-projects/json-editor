@@ -14,6 +14,7 @@ export const EditStringLine: React.FC<EditStringFieldProps> = ({
 	isEdit,
 	onApply,
 	onCancel,
+	onDelete,
 }) => {
 	const {
 		editValue,
@@ -31,7 +32,7 @@ export const EditStringLine: React.FC<EditStringFieldProps> = ({
 				onInputChange={handleInputChange}
 				onInputKeyDown={handleInputKeyDown}
 			/>
-			<EditControls onApply={handleApply} onCancel={onCancel} />
+			<EditControls onApply={handleApply} onCancel={onCancel} onDelete={onDelete} />
 		</EditLineWrapper>
 	);
 };
