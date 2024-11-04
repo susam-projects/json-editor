@@ -12,7 +12,7 @@ export const useStyles = createStyles(({ css, token }) => ({
       }
 
       &__buttons-column {
-        width: 50px;
+        width: 190px;
       }
 
       &__row-margin {
@@ -35,10 +35,10 @@ export const useStyles = createStyles(({ css, token }) => ({
           display: none;
         }
 
-							&__label {
-								overflow: hidden;
-								text-overflow: ellipsis;
-							}
+        &__label {
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
 
         &__value {
           padding: ${token.paddingXS}px ${token.padding}px;
@@ -56,29 +56,28 @@ export const useStyles = createStyles(({ css, token }) => ({
           text-align: right;
         }
 
-        &__edit-icon {
+        &__edit-button {
           cursor: pointer;
         }
 
-        &__remove-icon {
+        &__delete-button {
           cursor: pointer;
           &:hover {
-            color: ${token.colorError};
+            color: ${token.colorWhite};
+						background-color: ${token.colorError};
           }
         }
 
-        &__apply-icon {
+        &__apply-button {
           cursor: pointer;
           &:hover {
-            color: ${token.colorSuccess};
+						color: ${token.colorWhite};
+						background-color: ${token.colorSuccess};
           }
         }
 
-        &__cancel-icon {
+        &__cancel-button {
           cursor: pointer;
-          &:hover {
-            color: ${token.colorError};
-          }
         }
       }
     }

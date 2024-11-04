@@ -16,6 +16,7 @@ export const EditBooleanLine: React.FC<EditBooleanLineProps> = ({
 	isEdit,
 	onApply,
 	onCancel,
+	onDelete,
 }) => {
 	const {
 		editValue,
@@ -27,7 +28,7 @@ export const EditBooleanLine: React.FC<EditBooleanLineProps> = ({
 		<EditLineWrapper>
 			<EditLineLabel label={label} />
 			<BooleanEditor editValue={editValue} onInputChange={handleInputChange} />
-			<EditControls onApply={handleApply} onCancel={onCancel} />
+			<EditControls onApply={handleApply} onCancel={onCancel} onDelete={onDelete} />
 		</EditLineWrapper>
 	);
 };

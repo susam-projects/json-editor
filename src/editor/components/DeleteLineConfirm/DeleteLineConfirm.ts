@@ -1,4 +1,5 @@
 import { Modal } from 'antd';
+import { textEn } from '../../../text';
 
 type ModalHookAPI = ReturnType<typeof Modal.useModal>[0]
 
@@ -12,8 +13,8 @@ export const confirmDeleteLine = (modal: ModalHookAPI, {
 	onOk: () => void
 }) => {
 	modal.confirm({
-		title: 'Do you want to delete the line?',
-		content: `Row ${rowIndex} line ${lineIndex}`,
+		title: textEn.editorPage.deleteConfirm.title,
+		content: textEn.editorPage.deleteConfirm.description(rowIndex, lineIndex),
 		onOk,
 	});
 };

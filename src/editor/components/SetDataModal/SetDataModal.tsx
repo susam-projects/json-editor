@@ -27,7 +27,7 @@ export const SetDataModal: React.FC<SetDataModalProps> = ({ isOpen, onOk, onCanc
 
 	return (
 		<Modal
-			title={textEn.editorPage.setDataModalTitle}
+			title={textEn.editorPage.setDataModal.title}
 			okText={textEn.app.ok}
 			cancelText={textEn.app.cancel}
 			open={isOpen}
@@ -36,7 +36,7 @@ export const SetDataModal: React.FC<SetDataModalProps> = ({ isOpen, onOk, onCanc
 		>
 			<Input.TextArea
 				rows={16}
-				placeholder={textEn.editorPage.setDataPlaceholder}
+				placeholder={textEn.editorPage.setDataModal.placeholder}
 				value={inputValue}
 				onChange={handleInputChange}
 			/>

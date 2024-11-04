@@ -21,6 +21,7 @@ export const BooleanLine: React.FC<ConcreteLineProps<boolean>> = ({ data, onDele
 				isEdit={isEdit}
 				onApply={handleApply}
 				onCancel={handleCancel}
+				onDelete={onDelete}
 			/>
 		);
 	}
@@ -30,7 +31,6 @@ export const BooleanLine: React.FC<ConcreteLineProps<boolean>> = ({ data, onDele
 			label={data.label}
 			value={String(value)}
 			onEditClick={handleEditClick}
-			onDeleteClick={onDelete}
 		/>
 	);
 };

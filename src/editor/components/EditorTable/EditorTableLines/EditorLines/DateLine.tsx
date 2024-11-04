@@ -28,6 +28,7 @@ export const DateLine: React.FC<ConcreteLineProps<string>> = ({ data, onDelete }
 				isEdit={isEdit}
 				onApply={handleApply}
 				onCancel={handleCancel}
+				onDelete={onDelete}
 			/>
 		);
 	}
@@ -37,7 +38,6 @@ export const DateLine: React.FC<ConcreteLineProps<string>> = ({ data, onDelete }
 			label={data.label}
 			value={formattedValue}
 			onEditClick={handleEditClick}
-			onDeleteClick={onDelete}
 		/>
 	);
 };

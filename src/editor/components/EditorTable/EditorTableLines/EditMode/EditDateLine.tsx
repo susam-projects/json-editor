@@ -19,6 +19,7 @@ export const EditDateLine: React.FC<EditDateFieldProps> = ({
 	isEdit,
 	onApply,
 	onCancel,
+	onDelete,
 }) => {
 	const formattedValue = dayjs(value, [DATE_INPUT_FORMAT, DATA_DATE_FORMAT]).format(DATE_INPUT_FORMAT);
 
@@ -38,7 +39,7 @@ export const EditDateLine: React.FC<EditDateFieldProps> = ({
 				onInputChange={handleInputChange}
 				onInputKeyDown={handleInputKeyDown}
 			/>
-			<EditControls onApply={handleApply} onCancel={onCancel} />
+			<EditControls onApply={handleApply} onCancel={onCancel} onDelete={onDelete} />
 		</EditLineWrapper>
 	);
 };

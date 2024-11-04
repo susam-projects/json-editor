@@ -11,7 +11,7 @@ import { objectsToEditorData } from '../service/data.mapper.ts';
 import { confirmDeleteLine } from '../components/DeleteLineConfirm/DeleteLineConfirm.ts';
 import { EditorData } from '../types/EditorData.ts';
 import { DeleteLineHandler } from '../components/EditorTable/EditorTableLine/EditorTableLine.tsx';
-import jsonSample from '../data/json-sample.json';
+import jsonSample from '../data/json-1000.json';
 
 const useJsonData = () => {
 	const [data, setData] = React.useState(objectsToEditorData(jsonSample));

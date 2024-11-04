@@ -7,11 +7,17 @@ export const textEn = {
 		title: 'JSON Editor',
 		subTitle: 'Note: By default a hardcoded JSON is used. You can set any other one with the "Set JSON" button.',
 		setDataButton: 'Set JSON',
-		setDataModalTitle: 'Input JSON',
-		setDataPlaceholder: `[
+		setDataModal: {
+			title: 'Input JSON',
+			placeholder: `[
   { "sample": "value" },
   { "another": "value" }
 ]`,
+		},
+		deleteConfirm: {
+			title: 'Do you want to delete the line?',
+			description: (rowIndex: number, lineIndex: number) => `Row ${rowIndex} line ${lineIndex}`,
+		},
 		error: {
 			errorParsingData: 'Error parsing data!',
 		},
@@ -22,6 +28,8 @@ export const textEn = {
 			lineInputLabel: 'input cell',
 			booleanTrue: 'True',
 			booleanFalse: 'False',
+			editButton: 'Edit',
+			deleteButton: 'Delete',
 		},
 	},
 };

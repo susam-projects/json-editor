@@ -1,24 +1,38 @@
 import React from 'react';
 import { Space } from 'antd';
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import { textEn } from '../../../../../../text';
 
 type EditControlsProps = {
   onApply: () => void;
   onCancel: () => void;
+	onDelete: () => void;
 };
 
-export const EditControls: React.FC<EditControlsProps> = ({ onApply, onCancel }) => {
+export const EditControls: React.FC<EditControlsProps> = ({ onApply, onCancel, onDelete }) => {
 	return (
 		<td className="editor-table__field__controls">
 			<Space>
-				<CheckOutlined
-					className="editor-table__field__apply-icon"
+				<button
+					type="button"
+					className="editor-table__field__delete-button"
+					onClick={onDelete}
+				>
+					{textEn.editorPage.editorTable.deleteButton}
+				</button>
+				<button
+					type="button"
+					className="editor-table__field__apply-button"
 					onClick={onApply}
-				/>
-				<CloseOutlined
-					className="editor-table__field__cancel-icon"
+				>
+					{textEn.app.ok}
+				</button>
+				<button
+					type="button"
+					className="editor-table__field__cancel-button"
 					onClick={onCancel}
-				/>
+				>
+					{textEn.app.cancel}
+				</button>
 			</Space>
 		</td>
 	);

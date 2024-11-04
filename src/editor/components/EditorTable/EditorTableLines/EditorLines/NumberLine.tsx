@@ -21,6 +21,7 @@ export const NumberLine: React.FC<ConcreteLineProps<number>> = ({ data, onDelete
 				isEdit={isEdit}
 				onApply={handleApply}
 				onCancel={handleCancel}
+				onDelete={onDelete}
 			/>
 		);
 	}
@@ -30,7 +31,6 @@ export const NumberLine: React.FC<ConcreteLineProps<number>> = ({ data, onDelete
 			label={data.label}
 			value={value}
 			onEditClick={handleEditClick}
-			onDeleteClick={onDelete}
 		/>
 	);
 };
