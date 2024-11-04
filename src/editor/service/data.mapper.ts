@@ -38,6 +38,9 @@ type LineInfo = {
 const getLineType = (label: string, value: unknown): EditorDataLineType => {
 	const lineInfo: LineInfo = { label, value };
 
+	if (isText(lineInfo)) { // it should be one of the first to quickly skip long strings from processing
+		return EditorDataLineType.Text;
+	}
 	if (isId(lineInfo)) {
 		return EditorDataLineType.Id;
 	}
@@ -53,9 +56,6 @@ const getLineType = (label: string, value: unknown): EditorDataLineType => {
 	if (isDate(lineInfo)) {
 		return EditorDataLineType.Date;
 	}
-	if (isText(lineInfo)) {
-		return EditorDataLineType.Text;
-	}
 	if (isString(lineInfo)) {
 		return EditorDataLineType.String;
 	}
@@ -66,15 +66,15 @@ const isId = (line: LineInfo) => {
 	return String(line.label).toLowerCase() === 'id';
 };
 
-const isText = (line: LineInfo) => {
-	return isString(line) && (line.value as string).length > 100;
+const isText = (line: LineInfo): line is LineInfo & { value: string } => {
+	return isString(line) && line.value.length > 100;
 };
 
-const isString = (line: LineInfo) => {
+const isString = (line: LineInfo): line is LineInfo & { value: string } => {
 	return typeof line.value === 'string';
 };
 
-const isNumber = (line: LineInfo) => {
+const isNumber = (line: LineInfo): line is LineInfo & { value: number } => {
 	return typeof line.value === 'number' && !Number.isNaN(line.value);
 };
 
@@ -83,7 +83,7 @@ const isNumber = (line: LineInfo) => {
 // but decided to go with the simplest one
 // the main drawback in performance is not the data processing anyway
 const SIMPLE_EMAIL_REGEXP = /\S+@\S+\.\S+/;
-const isEmail = (line: LineInfo) => {
+const isEmail = (line: LineInfo): line is LineInfo & { value: string } => {
 	return SIMPLE_EMAIL_REGEXP.test(String(line.value));
 };
 
@@ -91,6 +91,6 @@ const isDate = (line: LineInfo) => {
 	return dayjs(String(line.value), DATA_DATE_FORMAT).isValid();
 };
 
-const isBoolean = (line: LineInfo) => {
+const isBoolean = (line: LineInfo): line is LineInfo & { value: boolean } => {
 	return [true, false, 'true', 'false'].some(possibleValue => possibleValue === line.value);
 };
