@@ -11,9 +11,16 @@ To install packages:
 npm i
 ```
 
+## Dev build
+
 To start dev server:
 ```shell
 npm run dev
+```
+
+The server would be accessible on:
+```
+http://localhost:5173
 ```
 
 ## Release build
@@ -26,4 +33,9 @@ npm run build
 To start prod preview server:
 ```shell
 npm run preview
+```
+
+The server would be accessible on:
+```
+http://localhost:4173
 ```
