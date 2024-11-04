@@ -17,14 +17,26 @@ export const useStyles = createStyles(({ css, token }) => ({
 
       &__row-margin {
         height: ${token.marginLG}px;
-        &:nth-last-child(-n + 2) {
-          display: none;
-        }
       }
 
       &__row-border {
         border-bottom: 1px solid ${token.colorBorder};
       }
+
+      &__add-button {
+        text-align: center;
+      }
+
+      &__row-controls {
+        text-align: right;
+      }
+
+      &__delete-row-button {
+        &:hover {
+          color: ${token.colorWhite};
+          background-color: ${token.colorError};
+        }
+			}
 
       &__field {
         &-read:hover {
@@ -58,6 +70,11 @@ export const useStyles = createStyles(({ css, token }) => ({
 
         &__edit-button {
           cursor: pointer;
+        }
+
+        &__add-line-button {
+          margin-left: ${token.marginXS}px;
+					cursor: pointer;
         }
 
         &__delete-button {
