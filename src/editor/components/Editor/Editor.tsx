@@ -1,5 +1,9 @@
 import React from 'react';
-import { DeleteLineHandler, EditorTableLine } from '../EditorTable/EditorTableLine/EditorTableLine.tsx';
+import {
+	ChangeLineHandler,
+	DeleteLineHandler,
+	EditorTableLine,
+} from '../EditorTable/EditorTableLine/EditorTableLine.tsx';
 import { EditorTableRow } from '../EditorTable/EditorTableRow/EditorTableRow.tsx';
 import {
 	EditorData,
@@ -10,6 +14,7 @@ import { EditorTable } from '../EditorTable/EditorTable/EditorTable.tsx';
 
 type EditorProps = {
   data: EditorData;
+	onChangeLine: ChangeLineHandler;
 	onDeleteLine: DeleteLineHandler;
 };
 
@@ -21,7 +26,7 @@ const getLineKey = (line: EditorDataLine, i: number) => {
 	return `${line.value} ${i}`;
 };
 
-export const Editor: React.FC<EditorProps> = ({ data, onDeleteLine }) => {
+export const Editor: React.FC<EditorProps> = ({ data, onChangeLine, onDeleteLine }) => {
 	return (
 		<EditorTable>
 			{data.map((row, rowIndex) => (
@@ -32,6 +37,7 @@ export const Editor: React.FC<EditorProps> = ({ data, onDeleteLine }) => {
 							data={line}
 							rowIndex={rowIndex}
 							lineIndex={lineIndex}
+							onChange={onChangeLine}
 							onDelete={onDeleteLine}
 						/>
 					))}

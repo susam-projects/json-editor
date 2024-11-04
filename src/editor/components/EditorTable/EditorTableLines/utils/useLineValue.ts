@@ -1,7 +1,8 @@
 import React from 'react';
+import { NewValueHandler } from './types.ts';
+import { EditorDataLine, EditorLineValue } from '../../../../types/EditorData.ts';
 
-export const useLineValue = <T>(defaultValue: T) => {
-	const [value, setValue] = React.useState(defaultValue);
+export const useLineValue = <T extends EditorLineValue>(data: EditorDataLine<T>, onChange: NewValueHandler<T>) => {
 	const [isEdit, setIsEdit] = React.useState(false);
 
 	const handleEditClick = () => {
@@ -9,7 +10,9 @@ export const useLineValue = <T>(defaultValue: T) => {
 	};
 
 	const handleApply = (newValue: T) => {
-		setValue(newValue);
+		if (data.value !== newValue) {
+			onChange(newValue);
+		}
 		setIsEdit(false);
 	};
 
@@ -18,7 +21,6 @@ export const useLineValue = <T>(defaultValue: T) => {
 	};
 
 	return {
-		value,
 		isEdit,
 		handleEditClick,
 		handleApply,
