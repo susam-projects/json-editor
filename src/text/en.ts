@@ -36,6 +36,7 @@ export const textEn = {
 		},
 		error: {
 			errorParsingData: 'Error parsing data!',
+			newLineValidationError: 'Fill all the fields, please!',
 		},
 		editorTable: {
 			labelColumn: 'label column',
