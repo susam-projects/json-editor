@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-	Form, Input, Modal, Select, Typography,
+	Form, Input, Modal, notification, Select, Typography,
 } from 'antd';
 import { EditorDataLineType } from '../../types/EditorData.ts';
 import { textEn } from '../../../text';
@@ -34,15 +34,16 @@ const SELECT_TYPE_OPTIONS: SelectOptions = [
 type FormFields = Partial<AddLineData>;
 
 export const AddLineModal: React.FC<AddLineModalProps> = ({ isOpen, onOk, onCancel }) => {
+	const [notificationApi, notificationContextHolder] = notification.useNotification();
 	const [form] = Form.useForm<FormFields>();
 
 	const handleOk = () => {
 		const values = form.getFieldsValue();
 		for (const key in values) {
 			if (!values[key as keyof FormFields]) {
-				// to show the error message
-				// eslint-disable-next-line no-console
-				console.error('fill all the fields, please!');
+				notificationApi.error({
+					message: textEn.editorPage.error.newLineValidationError,
+				});
 				return;
 			}
 		}
@@ -54,30 +55,33 @@ export const AddLineModal: React.FC<AddLineModalProps> = ({ isOpen, onOk, onCanc
 	}, [form, isOpen]);
 
 	return (
-		<Modal
-			title={textEn.editorPage.addLineModal.title}
-			okText={textEn.app.ok}
-			cancelText={textEn.app.cancel}
-			open={isOpen}
-			onOk={handleOk}
-			onCancel={onCancel}
-		>
-			<Form form={form} layout="vertical">
-				<Form.Item>
-					<Typography.Text type="secondary">
-						{textEn.editorPage.addLineModal.disclaimer}
-					</Typography.Text>
-				</Form.Item>
-				<Form.Item name="type" label={textEn.editorPage.addLineModal.typeLabel}>
-					<Select placeholder={textEn.editorPage.addLineModal.typePlaceholder} options={SELECT_TYPE_OPTIONS} />
-				</Form.Item>
-				<Form.Item name="label" label={textEn.editorPage.addLineModal.labelLabel}>
-					<Input placeholder={textEn.editorPage.addLineModal.labelPlaceholder} />
-				</Form.Item>
-				<Form.Item name="value" label={textEn.editorPage.addLineModal.valueLabel}>
-					<Input placeholder={textEn.editorPage.addLineModal.valuePlaceholder} />
-				</Form.Item>
-			</Form>
-		</Modal>
+		<>
+			<Modal
+				title={textEn.editorPage.addLineModal.title}
+				okText={textEn.app.ok}
+				cancelText={textEn.app.cancel}
+				open={isOpen}
+				onOk={handleOk}
+				onCancel={onCancel}
+			>
+				<Form form={form} layout="vertical">
+					<Form.Item>
+						<Typography.Text type="secondary">
+							{textEn.editorPage.addLineModal.disclaimer}
+						</Typography.Text>
+					</Form.Item>
+					<Form.Item name="type" label={textEn.editorPage.addLineModal.typeLabel}>
+						<Select placeholder={textEn.editorPage.addLineModal.typePlaceholder} options={SELECT_TYPE_OPTIONS} />
+					</Form.Item>
+					<Form.Item name="label" label={textEn.editorPage.addLineModal.labelLabel}>
+						<Input placeholder={textEn.editorPage.addLineModal.labelPlaceholder} />
+					</Form.Item>
+					<Form.Item name="value" label={textEn.editorPage.addLineModal.valueLabel}>
+						<Input placeholder={textEn.editorPage.addLineModal.valuePlaceholder} />
+					</Form.Item>
+				</Form>
+			</Modal>
+			{notificationContextHolder}
+		</>
 	);
 };

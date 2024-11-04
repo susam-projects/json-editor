@@ -7,6 +7,7 @@ import {
 import {
 	Button,
 	Modal,
+	notification,
 	Space,
 	Typography,
 } from 'antd';
@@ -35,6 +36,7 @@ import { SetState } from '../../utils/utilityTypes.ts';
 import jsonSample from '../data/json-1000.json';
 
 const useJsonData = () => {
+	const [notificationApi, notificationContextHolder] = notification.useNotification();
 	const [data, setData] = React.useState(objectsToEditorData(jsonSample));
 
 	const {
@@ -55,9 +57,10 @@ const useJsonData = () => {
 				setData(newEditorData);
 			}
 		} catch (err) {
-			// to be able to debug the user JSON
-			// eslint-disable-next-line no-console
-			console.error(textEn.editorPage.error.errorParsingData, err);
+			notificationApi.error({
+				message: textEn.editorPage.error.errorParsingData,
+				description: String(err),
+			});
 		}
 		closeSetDataModal();
 	};
@@ -69,6 +72,7 @@ const useJsonData = () => {
 		openSetDataModal,
 		handleSetDataCancel,
 		handleSetData,
+		notificationContextHolder,
 	};
 };
 
@@ -173,6 +177,7 @@ export const EditorPage: React.FC = () => {
 		openSetDataModal,
 		handleSetDataCancel,
 		handleSetData,
+		notificationContextHolder,
 	} = useJsonData();
 
 	const {
@@ -219,6 +224,7 @@ export const EditorPage: React.FC = () => {
 				onCancel={handleAddModalCancel}
 			/>
 			{modalContextHolder}
+			{notificationContextHolder}
 		</Page>
 	);
 };
