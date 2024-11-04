@@ -38,11 +38,11 @@ type LineInfo = {
 const getLineType = (label: string, value: unknown): EditorDataLineType => {
 	const lineInfo: LineInfo = { label, value };
 
-	if (isText(lineInfo)) { // it should be one of the first to quickly skip long strings from processing
-		return EditorDataLineType.Text;
-	}
 	if (isId(lineInfo)) {
 		return EditorDataLineType.Id;
+	}
+	if (isText(lineInfo)) { // it should be one of the first to quickly skip long strings from processing
+		return EditorDataLineType.Text;
 	}
 	if (isBoolean(lineInfo)) {
 		return EditorDataLineType.Boolean;

@@ -4,7 +4,8 @@ import {
 } from '../../../../types/EditorData.ts';
 
 export type ConcreteLineProps<T extends EditorLineValue = EditorLineValue> = {
-  data: EditorDataLine<T>
+  data: EditorDataLine<T>;
+	onDelete: () => void;
 };
 
 export type EditLineProps<T> = {

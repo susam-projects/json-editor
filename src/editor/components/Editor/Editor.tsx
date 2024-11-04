@@ -1,5 +1,5 @@
 import React from 'react';
-import { EditorTableLine } from '../EditorTable/EditorTableLine/EditorTableLine.tsx';
+import { DeleteLineHandler, EditorTableLine } from '../EditorTable/EditorTableLine/EditorTableLine.tsx';
 import { EditorTableRow } from '../EditorTable/EditorTableRow/EditorTableRow.tsx';
 import {
 	EditorData,
@@ -10,6 +10,7 @@ import { EditorTable } from '../EditorTable/EditorTable/EditorTable.tsx';
 
 type EditorProps = {
   data: EditorData;
+	onDeleteLine: DeleteLineHandler;
 };
 
 const getRowKey = (row: EditorDataRow, i: number) => {
@@ -20,13 +21,19 @@ const getLineKey = (line: EditorDataLine, i: number) => {
 	return `${line.value} ${i}`;
 };
 
-export const Editor: React.FC<EditorProps> = ({ data }) => {
+export const Editor: React.FC<EditorProps> = ({ data, onDeleteLine }) => {
 	return (
 		<EditorTable>
-			{data.map((row, i) => (
-				<EditorTableRow key={getRowKey(row, i)}>
-					{row.map(line => (
-						<EditorTableLine key={getLineKey(line, i)} data={line} />
+			{data.map((row, rowIndex) => (
+				<EditorTableRow key={getRowKey(row, rowIndex)}>
+					{row.map((line, lineIndex) => (
+						<EditorTableLine
+							key={getLineKey(line, lineIndex)}
+							data={line}
+							rowIndex={rowIndex}
+							lineIndex={lineIndex}
+							onDelete={onDeleteLine}
+						/>
 					))}
 				</EditorTableRow>
 			))}

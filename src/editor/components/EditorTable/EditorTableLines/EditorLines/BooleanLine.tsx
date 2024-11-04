@@ -4,7 +4,7 @@ import { EditBooleanLine } from '../EditMode/EditBooleanLine.tsx';
 import { ReadModeLine } from '../ReadMode/ReadModeLine.tsx';
 import { useLineValue } from '../utils/useLineValue.ts';
 
-export const BooleanLine: React.FC<ConcreteLineProps<boolean>> = ({ data }) => {
+export const BooleanLine: React.FC<ConcreteLineProps<boolean>> = ({ data, onDelete }) => {
 	const {
 		value,
 		isEdit,
@@ -30,6 +30,7 @@ export const BooleanLine: React.FC<ConcreteLineProps<boolean>> = ({ data }) => {
 			label={data.label}
 			value={String(value)}
 			onEditClick={handleEditClick}
+			onDeleteClick={onDelete}
 		/>
 	);
 };
