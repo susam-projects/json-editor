@@ -4,7 +4,7 @@ import { useLineValue } from '../utils/useLineValue.ts';
 import { EditEmailLine } from '../EditMode/EditEmailLine.tsx';
 import { ReadModeLine } from '../ReadMode/ReadModeLine.tsx';
 
-export const EmailLine: React.FC<ConcreteLineProps<string>> = ({ data }) => {
+export const EmailLine: React.FC<ConcreteLineProps<string>> = ({ data, onDelete }) => {
 	const {
 		value,
 		isEdit,
@@ -30,6 +30,7 @@ export const EmailLine: React.FC<ConcreteLineProps<string>> = ({ data }) => {
 			label={data.label}
 			value={value}
 			onEditClick={handleEditClick}
+			onDeleteClick={onDelete}
 		/>
 	);
 };

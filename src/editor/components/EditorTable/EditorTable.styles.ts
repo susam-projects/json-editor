@@ -60,6 +60,13 @@ export const useStyles = createStyles(({ css, token }) => ({
           cursor: pointer;
         }
 
+        &__remove-icon {
+          cursor: pointer;
+          &:hover {
+            color: ${token.colorError};
+          }
+        }
+
         &__apply-icon {
           cursor: pointer;
           &:hover {
