@@ -14,7 +14,21 @@ export const textEn = {
   { "another": "value" }
 ]`,
 		},
-		deleteConfirm: {
+		addLineModal: {
+			title: 'Add new line',
+			disclaimer: 'Note: This modal is implemented in the simplest way (without validation, without different input types), because have thought that it\'s not a required part of the task.',
+			typeLabel: 'Type',
+			typePlaceholder: 'String, Number, etc.',
+			labelLabel: 'Label',
+			labelPlaceholder: 'Some label',
+			valueLabel: 'Value',
+			valuePlaceholder: 'Some value',
+		},
+		deleteRowConfirm: {
+			title: 'Do you want to delete the row?',
+			description: (rowIndex: number) => `Row ${rowIndex}`,
+		},
+		deleteLineConfirm: {
 			title: 'Do you want to delete the line?',
 			description: (rowIndex: number, lineIndex: number) => `Row ${rowIndex} line ${lineIndex}`,
 		},
@@ -28,7 +42,12 @@ export const textEn = {
 			lineInputLabel: 'input cell',
 			booleanTrue: 'True',
 			booleanFalse: 'False',
-			editButton: 'Edit',
+			addRowButton: '+ Add row',
+			addFirstLineButton: '+ Add first line',
+			deleteRowButton: 'Delete row',
+			editRowButton: 'Edit row',
+			addLineButton: '+',
+			editLineButton: 'Edit',
 			deleteButton: 'Delete',
 		},
 	},

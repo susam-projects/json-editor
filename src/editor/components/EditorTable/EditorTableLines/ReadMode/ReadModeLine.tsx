@@ -5,11 +5,15 @@ import { textEn } from '../../../../../text';
 type ReadModeFieldProps = {
 	label: string;
 	value: EditorLineValue;
+	onAddClick: () => void;
 	onEditClick: () => void;
 };
 
 export const ReadModeLine: React.FC<ReadModeFieldProps> = ({
-	label, value, onEditClick,
+	label,
+	value,
+	onAddClick,
+	onEditClick,
 }) => {
 	return (
 		<tr className="editor-table__field-read">
@@ -21,7 +25,14 @@ export const ReadModeLine: React.FC<ReadModeFieldProps> = ({
 					className="editor-table__field__edit-button"
 					onClick={onEditClick}
 				>
-					{textEn.editorPage.editorTable.editButton}
+					{textEn.editorPage.editorTable.editLineButton}
+				</button>
+				<button
+					type="button"
+					className="editor-table__field__add-line-button"
+					onClick={onAddClick}
+				>
+					{textEn.editorPage.editorTable.addLineButton}
 				</button>
 			</td>
 		</tr>

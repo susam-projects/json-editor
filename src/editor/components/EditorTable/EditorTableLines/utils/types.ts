@@ -7,6 +7,7 @@ export type NewValueHandler<T> = (newValue: T) => void;
 
 export type ConcreteLineProps<T extends EditorLineValue = EditorLineValue> = {
   data: EditorDataLine<T>;
+	onAddLine: () => void;
 	onChange: NewValueHandler<T>;
 	onDelete: () => void;
 };

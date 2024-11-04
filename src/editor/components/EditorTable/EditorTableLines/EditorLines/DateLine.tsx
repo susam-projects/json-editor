@@ -10,7 +10,12 @@ import {
 import { EditDateLine } from '../EditMode/EditDateLine.tsx';
 import { ReadModeLine } from '../ReadMode/ReadModeLine.tsx';
 
-export const DateLine: React.FC<ConcreteLineProps<string>> = ({ data, onChange, onDelete }) => {
+export const DateLine: React.FC<ConcreteLineProps<string>> = ({
+	data,
+	onAddLine,
+	onChange,
+	onDelete,
+}) => {
 	const {
 		isEdit,
 		handleEditClick,
@@ -36,6 +41,7 @@ export const DateLine: React.FC<ConcreteLineProps<string>> = ({ data, onChange, 
 		<ReadModeLine
 			label={data.label}
 			value={formattedValue}
+			onAddClick={onAddLine}
 			onEditClick={handleEditClick}
 		/>
 	);

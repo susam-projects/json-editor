@@ -12,13 +12,15 @@ import {
 	TextLine,
 } from '../EditorTableLines';
 
-export type DeleteLineHandler = (rowIndex: number, lineIndex: number) => void;
+export type AddLineHandler = (rowIndex: number, prevLineIndex: number) => void;
 export type ChangeLineHandler = (rowIndex: number, lineIndex: number, newValue: EditorLineValue) => void;
+export type DeleteLineHandler = (rowIndex: number, lineIndex: number) => void;
 
 type EditorLineProps = {
 	data: EditorDataLine
 	rowIndex: number;
 	lineIndex: number;
+	onAddLine: AddLineHandler;
 	onChange: ChangeLineHandler;
 	onDelete: DeleteLineHandler;
 };
@@ -28,9 +30,14 @@ export const EditorTableLine: React.FC<EditorLineProps> = React.memo(
 		data,
 		rowIndex,
 		lineIndex,
+		onAddLine,
 		onChange,
 		onDelete,
 	}) => {
+		const handleAddLine = () => {
+			onAddLine(rowIndex, lineIndex);
+		};
+
 		const handleChange = (newValue: EditorLineValue) => {
 			onChange(rowIndex, lineIndex, newValue);
 		};
@@ -46,22 +53,64 @@ export const EditorTableLine: React.FC<EditorLineProps> = React.memo(
 		// unlike a map, switch allows to specify exact data types
 		switch (data.type) {
 		case EditorDataLineType.String:
-			return <StringLine data={data as EditorDataLine<string>} onChange={handleChange} onDelete={handleDelete} />;
+			return (
+				<StringLine
+					data={data as EditorDataLine<string>}
+					onAddLine={handleAddLine}
+					onChange={handleChange}
+					onDelete={handleDelete}
+				/>
+			);
 
 		case EditorDataLineType.Number:
-			return <NumberLine data={data as EditorDataLine<number>} onChange={handleChange} onDelete={handleDelete} />;
+			return (
+				<NumberLine
+					data={data as EditorDataLine<number>}
+					onAddLine={handleAddLine}
+					onChange={handleChange}
+					onDelete={handleDelete}
+				/>
+			);
 
 		case EditorDataLineType.Email:
-			return <EmailLine data={data as EditorDataLine<string>} onChange={handleChange} onDelete={handleDelete} />;
+			return (
+				<EmailLine
+					data={data as EditorDataLine<string>}
+					onAddLine={handleAddLine}
+					onChange={handleChange}
+					onDelete={handleDelete}
+				/>
+			);
 
 		case EditorDataLineType.Date:
-			return <DateLine data={data as EditorDataLine<string>} onChange={handleChange} onDelete={handleDelete} />;
+			return (
+				<DateLine
+					data={data as EditorDataLine<string>}
+					onAddLine={handleAddLine}
+					onChange={handleChange}
+					onDelete={handleDelete}
+				/>
+			);
 
 		case EditorDataLineType.Boolean:
-			return <BooleanLine data={data as EditorDataLine<boolean>} onChange={handleChange} onDelete={handleDelete} />;
+			return (
+				<BooleanLine
+					data={data as EditorDataLine<boolean>}
+					onAddLine={handleAddLine}
+					onChange={handleChange}
+					onDelete={handleDelete}
+				/>
+			);
 
 		case EditorDataLineType.Text:
-			return <TextLine data={data as EditorDataLine<string>} onChange={handleChange} onDelete={handleDelete} />;
+			return (
+				<TextLine
+					data={data as EditorDataLine<string>}
+					onAddLine={handleAddLine}
+					onChange={handleChange}
+					onDelete={handleDelete}
+				/>
+			);
 
 		case EditorDataLineType.Id:
 		case EditorDataLineType.Unknown:

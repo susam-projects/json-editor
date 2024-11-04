@@ -4,7 +4,12 @@ import { useLineValue } from '../utils/useLineValue.ts';
 import { EditStringLine } from '../EditMode/EditStringLine.tsx';
 import { ReadModeLine } from '../ReadMode/ReadModeLine.tsx';
 
-export const StringLine: React.FC<ConcreteLineProps<string>> = ({ data, onChange, onDelete }) => {
+export const StringLine: React.FC<ConcreteLineProps<string>> = ({
+	data,
+	onAddLine,
+	onChange,
+	onDelete,
+}) => {
 	const {
 		isEdit,
 		handleEditClick,
@@ -29,6 +34,7 @@ export const StringLine: React.FC<ConcreteLineProps<string>> = ({ data, onChange
 		<ReadModeLine
 			label={data.label}
 			value={data.value}
+			onAddClick={onAddLine}
 			onEditClick={handleEditClick}
 		/>
 	);
