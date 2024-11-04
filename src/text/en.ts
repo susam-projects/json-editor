@@ -1,3 +1,8 @@
+const SET_DATA_INPUT_PLACEHOLDER = `[
+  { "sample": "value" },
+  { "another": "value" }
+]`;
+
 export const textEn = {
 	app: {
 		ok: 'Ok',
@@ -9,10 +14,7 @@ export const textEn = {
 		setDataButton: 'Set JSON',
 		setDataModal: {
 			title: 'Input JSON',
-			placeholder: `[
-  { "sample": "value" },
-  { "another": "value" }
-]`,
+			placeholder: SET_DATA_INPUT_PLACEHOLDER,
 		},
 		addLineModal: {
 			title: 'Add new line',
