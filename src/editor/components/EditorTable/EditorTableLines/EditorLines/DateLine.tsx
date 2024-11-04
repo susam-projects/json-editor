@@ -4,27 +4,25 @@ import { useLineValue } from '../utils/useLineValue.ts';
 import dayjs from 'dayjs';
 import {
 	DATA_DATE_FORMAT,
-	DATE_INPUT_FORMAT, DATE_READ_FORMAT,
+	DATE_INPUT_FORMAT,
+	DATE_READ_FORMAT,
 } from '../../../../const/dateConst.ts';
 import { EditDateLine } from '../EditMode/EditDateLine.tsx';
 import { ReadModeLine } from '../ReadMode/ReadModeLine.tsx';
 
-export const DateLine: React.FC<ConcreteLineProps<string>> = ({ data, onDelete }) => {
+export const DateLine: React.FC<ConcreteLineProps<string>> = ({ data, onChange, onDelete }) => {
 	const {
-		value,
 		isEdit,
 		handleEditClick,
 		handleApply,
 		handleCancel,
-	} = useLineValue(data.value);
-
-	const formattedValue = value && dayjs(value, [DATA_DATE_FORMAT, DATE_INPUT_FORMAT]).format(DATE_READ_FORMAT);
+	} = useLineValue(data, onChange);
 
 	if (isEdit) {
 		return (
 			<EditDateLine
 				label={data.label}
-				value={value}
+				value={data.value}
 				isEdit={isEdit}
 				onApply={handleApply}
 				onCancel={handleCancel}
@@ -33,6 +31,7 @@ export const DateLine: React.FC<ConcreteLineProps<string>> = ({ data, onDelete }
 		);
 	}
 
+	const formattedValue = data.value && dayjs(data.value, [DATA_DATE_FORMAT, DATE_INPUT_FORMAT]).format(DATE_READ_FORMAT);
 	return (
 		<ReadModeLine
 			label={data.label}

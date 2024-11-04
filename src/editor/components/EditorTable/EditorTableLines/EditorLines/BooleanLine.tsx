@@ -4,20 +4,19 @@ import { EditBooleanLine } from '../EditMode/EditBooleanLine.tsx';
 import { ReadModeLine } from '../ReadMode/ReadModeLine.tsx';
 import { useLineValue } from '../utils/useLineValue.ts';
 
-export const BooleanLine: React.FC<ConcreteLineProps<boolean>> = ({ data, onDelete }) => {
+export const BooleanLine: React.FC<ConcreteLineProps<boolean>> = ({ data, onChange, onDelete }) => {
 	const {
-		value,
 		isEdit,
 		handleEditClick,
 		handleApply,
 		handleCancel,
-	} = useLineValue(data.value);
+	} = useLineValue(data, onChange);
 
 	if (isEdit) {
 		return (
 			<EditBooleanLine
 				label={data.label}
-				value={value}
+				value={data.value}
 				isEdit={isEdit}
 				onApply={handleApply}
 				onCancel={handleCancel}
@@ -29,7 +28,7 @@ export const BooleanLine: React.FC<ConcreteLineProps<boolean>> = ({ data, onDele
 	return (
 		<ReadModeLine
 			label={data.label}
-			value={String(value)}
+			value={String(data.value)}
 			onEditClick={handleEditClick}
 		/>
 	);

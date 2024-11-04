@@ -3,8 +3,11 @@ import {
 	EditorLineValue,
 } from '../../../../types/EditorData.ts';
 
+export type NewValueHandler<T> = (newValue: T) => void;
+
 export type ConcreteLineProps<T extends EditorLineValue = EditorLineValue> = {
   data: EditorDataLine<T>;
+	onChange: NewValueHandler<T>;
 	onDelete: () => void;
 };
 

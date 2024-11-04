@@ -4,20 +4,19 @@ import { useLineValue } from '../utils/useLineValue.ts';
 import { EditTextLine } from '../EditMode/EditTextLine.tsx';
 import { ReadModeLine } from '../ReadMode/ReadModeLine.tsx';
 
-export const TextLine: React.FC<ConcreteLineProps<string>> = ({ data, onDelete }) => {
+export const TextLine: React.FC<ConcreteLineProps<string>> = ({ data, onChange, onDelete }) => {
 	const {
-		value,
 		isEdit,
 		handleEditClick,
 		handleApply,
 		handleCancel,
-	} = useLineValue(data.value);
+	} = useLineValue(data, onChange);
 
 	if (isEdit) {
 		return (
 			<EditTextLine
 				label={data.label}
-				value={value}
+				value={data.value}
 				isEdit={isEdit}
 				onApply={handleApply}
 				onCancel={handleCancel}
@@ -29,7 +28,7 @@ export const TextLine: React.FC<ConcreteLineProps<string>> = ({ data, onDelete }
 	return (
 		<ReadModeLine
 			label={data.label}
-			value={value}
+			value={data.value}
 			onEditClick={handleEditClick}
 		/>
 	);
