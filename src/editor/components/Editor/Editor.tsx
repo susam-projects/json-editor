@@ -16,7 +16,6 @@ import { AddRowButton } from '../EditorTable/AddRowButton/AddRowButton.tsx';
 import { RowControls } from '../EditorTable/RowControls/RowControls.tsx';
 
 export type AddRowHandler = (prevRowIndex: number) => void;
-
 export type DeleteRowHandler = (rowIndex: number) => void;
 
 type EditorProps = {

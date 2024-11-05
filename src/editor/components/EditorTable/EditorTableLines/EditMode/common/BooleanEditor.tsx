@@ -1,7 +1,7 @@
 import { RadioGroupOnChange } from '../../utils/useBooleanEditValue.ts';
 import React from 'react';
-import { textEn } from '../../../../../../text';
 import { Radio } from 'antd';
+import { textEn } from '../../../../../../text';
 
 type BooleanEditorProps = {
   editValue: string;
