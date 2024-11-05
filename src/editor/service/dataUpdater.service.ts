@@ -2,24 +2,14 @@ import {
 	EditorData, EditorDataLine, EditorDataRow, EditorLineValue,
 } from '../types/EditorData.ts';
 import { AddLineData } from '../components/AddLineModal/AddLineModal.tsx';
+import { addAfter } from '../../utils/arrayUtils.ts';
 
 /**
  * adds new row after the given one
  */
-export const addRow = (prevData: EditorData, rowIndex: number): EditorData => {
+export const addRow = (prevData: EditorData, prevRowIndex: number): EditorData => {
 	const newRow: EditorDataRow = [];
-
-	if (rowIndex < 0) {
-		return [newRow, ...prevData];
-	}
-
-	return prevData.reduce<EditorData>((result, row, currentRowIndex) => {
-		result.push(row);
-		if (currentRowIndex === rowIndex) {
-			result.push(newRow);
-		}
-		return result;
-	}, []);
+	return addAfter(prevData, prevRowIndex, newRow);
 };
 
 /**
@@ -36,31 +26,17 @@ export const deleteRow = (prevData: EditorData, rowIndex: number): EditorData =>
 export const addLine = (
 	prevData: EditorData,
 	rowIndex: number,
-	lineIndex: number,
-	lineData: AddLineData,
+	prevLineIndex: number,
+	newLineData: AddLineData,
 ): EditorData => {
 	const newLine: EditorDataLine = {
-		...lineData,
+		...newLineData,
 		isVisible: true,
-	};
-
-	const updateRow = (row: EditorDataRow, lineIndex: number, newLine: EditorDataLine): EditorDataRow => {
-		if (lineIndex < 0) {
-			return [newLine, ...row];
-		}
-
-		return row.reduce<EditorDataRow>((result, currentLine, currentLineIndex) => {
-			result.push(currentLine);
-			if (lineIndex === currentLineIndex) {
-				result.push(newLine);
-			}
-			return result;
-		}, []);
 	};
 
 	return prevData.reduce<EditorData>((result, row, currentRowIndex) => {
 		if (rowIndex === currentRowIndex) {
-			const updatedRow = updateRow(row, lineIndex, newLine);
+			const updatedRow = addAfter(row, prevLineIndex, newLine);
 			result.push(updatedRow);
 		} else {
 			result.push(row);
