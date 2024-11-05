@@ -11,6 +11,7 @@ import {
 	StringLine,
 	TextLine,
 } from '../EditorTableLines';
+import { ConcreteLineProps } from '../EditorTableLines/utils/types.ts';
 
 export type AddLineHandler = (rowIndex: number, prevLineIndex: number) => void;
 export type ChangeLineHandler = (rowIndex: number, lineIndex: number, newValue: EditorLineValue) => void;
@@ -25,15 +26,15 @@ type EditorLineProps = {
 	onDelete: DeleteLineHandler;
 };
 
-const LINE_COMPONENTS = {
+const LINE_COMPONENTS: Record<EditorDataLineType, React.FC<ConcreteLineProps> | null> = {
 	[EditorDataLineType.Unknown]: null,
 	[EditorDataLineType.Id]: null,
-	[EditorDataLineType.String]: StringLine,
-	[EditorDataLineType.Number]: NumberLine,
-	[EditorDataLineType.Email]: EmailLine,
-	[EditorDataLineType.Date]: DateLine,
-	[EditorDataLineType.Boolean]: BooleanLine,
-	[EditorDataLineType.Text]: TextLine,
+	[EditorDataLineType.String]: StringLine as React.FC<ConcreteLineProps>,
+	[EditorDataLineType.Number]: NumberLine as React.FC<ConcreteLineProps>,
+	[EditorDataLineType.Email]: EmailLine as React.FC<ConcreteLineProps>,
+	[EditorDataLineType.Date]: DateLine as React.FC<ConcreteLineProps>,
+	[EditorDataLineType.Boolean]: BooleanLine as React.FC<ConcreteLineProps>,
+	[EditorDataLineType.Text]: TextLine as React.FC<ConcreteLineProps>,
 };
 
 export const EditorTableLine: React.FC<EditorLineProps> = React.memo(
@@ -65,7 +66,7 @@ export const EditorTableLine: React.FC<EditorLineProps> = React.memo(
 		if (LineComponent) {
 			return (
 				<LineComponent
-					data={data as never} // don't know how to better type it, currently TS "thinks" that LineComponent.data has type "never"
+					data={data}
 					onAddLine={handleAddLine}
 					onChange={handleChange}
 					onDelete={handleDelete}
