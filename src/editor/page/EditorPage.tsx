@@ -104,8 +104,6 @@ const useAddLineModal = (setData: SetState<EditorData>) => {
 	}, [open]);
 
 	return {
-		setRowIndex,
-		setPrevLineIndex,
 		handleAddModalOk,
 		handleAddModalCancel,
 		isAddLineModalOpen,
