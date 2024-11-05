@@ -10,8 +10,8 @@ import {
 	NumberLine,
 	StringLine,
 	TextLine,
+	ConcreteLineProps,
 } from '../EditorTableLines';
-import { ConcreteLineProps } from '../EditorTableLines/utils/types.ts';
 
 export type AddLineHandler = (rowIndex: number, prevLineIndex: number) => void;
 export type ChangeLineHandler = (rowIndex: number, lineIndex: number, newValue: EditorLineValue) => void;

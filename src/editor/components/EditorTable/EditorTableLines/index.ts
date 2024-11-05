@@ -4,3 +4,4 @@ export { EmailLine } from './EditorLines/EmailLine.tsx';
 export { DateLine } from './EditorLines/DateLine.tsx';
 export { BooleanLine } from './EditorLines/BooleanLine.tsx';
 export { TextLine } from './EditorLines/TextLine.tsx';
+export type { ConcreteLineProps } from './utils/types.ts';
