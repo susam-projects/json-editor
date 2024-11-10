@@ -3,10 +3,10 @@ import { EditLineProps } from '../utils/types.ts';
 import {
 	useBooleanEditValue,
 } from '../utils/useBooleanEditValue.ts';
-import { EditControls } from './common/EditControls.tsx';
-import { EditLineWrapper } from './common/EditLineWrapper.tsx';
-import { EditLineLabel } from './common/EditLineLabel.tsx';
-import { BooleanEditor } from './common/BooleanEditor.tsx';
+import { EditControls } from './editControls/EditControls.tsx';
+import { EditLineWrapper } from './lineWrapper/EditLineWrapper.tsx';
+import { EditLineLabel } from './lineLabel/EditLineLabel.tsx';
+import { BooleanEditor } from './editors/BooleanEditor.tsx';
 
 type EditBooleanLineProps = EditLineProps<boolean>
 
