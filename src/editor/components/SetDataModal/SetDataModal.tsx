@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { Input, Modal } from 'antd';
-import { textEn } from '../../../text';
+import React, { useEffect } from "react";
+import { Input, Modal } from "antd";
+import { textEn } from "../../../text";
 
 type SetDataModalProps = {
   isOpen: boolean;
@@ -8,38 +8,42 @@ type SetDataModalProps = {
   onCancel: () => void;
 };
 
-type TOnChange = React.ComponentProps<typeof Input.TextArea>['onChange'];
+type TOnChange = React.ComponentProps<typeof Input.TextArea>["onChange"];
 
-export const SetDataModal: React.FC<SetDataModalProps> = ({ isOpen, onOk, onCancel }) => {
-	const [inputValue, setInputValue] = React.useState('');
+export const SetDataModal: React.FC<SetDataModalProps> = ({
+  isOpen,
+  onOk,
+  onCancel,
+}) => {
+  const [inputValue, setInputValue] = React.useState("");
 
-	useEffect(() => {
-		setInputValue('');
-	}, [isOpen]);
+  useEffect(() => {
+    setInputValue("");
+  }, [isOpen]);
 
-	const handleInputChange: TOnChange = (event) => {
-		setInputValue(event.target.value);
-	};
+  const handleInputChange: TOnChange = (event) => {
+    setInputValue(event.target.value);
+  };
 
-	const handleOk = () => {
-		onOk(inputValue);
-	};
+  const handleOk = () => {
+    onOk(inputValue);
+  };
 
-	return (
-		<Modal
-			title={textEn.editorPage.setDataModal.title}
-			okText={textEn.app.ok}
-			cancelText={textEn.app.cancel}
-			open={isOpen}
-			onOk={handleOk}
-			onCancel={onCancel}
-		>
-			<Input.TextArea
-				rows={16}
-				placeholder={textEn.editorPage.setDataModal.placeholder}
-				value={inputValue}
-				onChange={handleInputChange}
-			/>
-		</Modal>
-	);
+  return (
+    <Modal
+      title={textEn.editorPage.setDataModal.title}
+      okText={textEn.app.ok}
+      cancelText={textEn.app.cancel}
+      open={isOpen}
+      onOk={handleOk}
+      onCancel={onCancel}
+    >
+      <Input.TextArea
+        rows={16}
+        placeholder={textEn.editorPage.setDataModal.placeholder}
+        value={inputValue}
+        onChange={handleInputChange}
+      />
+    </Modal>
+  );
 };

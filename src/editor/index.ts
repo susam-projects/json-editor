@@ -1,1 +1,1 @@
-export { EditorPage } from './page/EditorPage.tsx';
+export { EditorPage } from "./page/EditorPage.tsx";

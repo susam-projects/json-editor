@@ -1,7 +1,7 @@
-import { createStyles } from 'antd-style';
+import { createStyles } from "antd-style";
 
 export const useStyles = createStyles(({ css, token }) => ({
-	table: css`
+  table: css`
     table-layout: fixed;
     width: 100%;
 
@@ -36,7 +36,7 @@ export const useStyles = createStyles(({ css, token }) => ({
           color: ${token.colorWhite};
           background-color: ${token.colorError};
         }
-			}
+      }
 
       &__field {
         &-read:hover {
@@ -59,7 +59,8 @@ export const useStyles = createStyles(({ css, token }) => ({
         &__edit-value {
           padding: ${token.paddingXS}px ${token.padding}px;
           color: ${token.colorText};
-          input, textarea {
+          input,
+          textarea {
             width: 100%;
           }
         }
@@ -74,22 +75,22 @@ export const useStyles = createStyles(({ css, token }) => ({
 
         &__add-line-button {
           margin-left: ${token.marginXS}px;
-					cursor: pointer;
+          cursor: pointer;
         }
 
         &__delete-button {
           cursor: pointer;
           &:hover {
             color: ${token.colorWhite};
-						background-color: ${token.colorError};
+            background-color: ${token.colorError};
           }
         }
 
         &__apply-button {
           cursor: pointer;
           &:hover {
-						color: ${token.colorWhite};
-						background-color: ${token.colorSuccess};
+            color: ${token.colorWhite};
+            background-color: ${token.colorSuccess};
           }
         }
 

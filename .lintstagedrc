@@ -1,5 +1,5 @@
 {
   "*.(js{x,}|ts{x,})": [
-    "eslint --fix --ext .js,.ts,.jsx,.tsx --config .eslintrc"
+    "eslint --fix --ext .js,.ts,.jsx,.tsx --config .eslintrc.cjs"
   ],
 }

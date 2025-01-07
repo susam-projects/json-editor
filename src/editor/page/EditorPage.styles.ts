@@ -1,15 +1,15 @@
-import { createStyles } from 'antd-style';
+import { createStyles } from "antd-style";
 
 export const useStyles = createStyles(({ css, token }) => ({
-	verticalSpace: css`
+  verticalSpace: css`
     display: flex;
   `,
 
-	title: css`
+  title: css`
     text-align: center;
   `,
 
-	subtitle: css`
+  subtitle: css`
     display: block;
     text-align: center;
     color: ${token.colorTextDisabled};

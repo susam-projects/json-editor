@@ -1,1 +1,1 @@
-export { textEn } from './en.ts';
+export { textEn } from "./en.ts";

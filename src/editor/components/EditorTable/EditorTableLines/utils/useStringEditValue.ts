@@ -1,34 +1,43 @@
-import React from 'react';
-import { StringInputElement } from './types.ts';
+import React from "react";
+import { StringInputElement } from "./types.ts";
 
-export const useStringEditValue = (value: string, isEdit: boolean, onApply: (value: string) => void, onCancel: () => void) => {
-	const [editValue, setEditValue] = React.useState('');
+export const useStringEditValue = (
+  value: string,
+  isEdit: boolean,
+  onApply: (value: string) => void,
+  onCancel: () => void,
+) => {
+  const [editValue, setEditValue] = React.useState("");
 
-	React.useEffect(() => {
-		setEditValue(value);
-	}, [isEdit, value]);
+  React.useEffect(() => {
+    setEditValue(value);
+  }, [isEdit, value]);
 
-	const handleInputChange: React.ChangeEventHandler<StringInputElement> = (event) => {
-		setEditValue(event.target.value);
-	};
+  const handleInputChange: React.ChangeEventHandler<StringInputElement> = (
+    event,
+  ) => {
+    setEditValue(event.target.value);
+  };
 
-	const handleInputKeyDown: React.KeyboardEventHandler<StringInputElement> = (event) => {
-		if (event.key === 'Enter') {
-			handleApply();
-		}
-		if (event.key === 'Escape') {
-			onCancel();
-		}
-	};
+  const handleInputKeyDown: React.KeyboardEventHandler<StringInputElement> = (
+    event,
+  ) => {
+    if (event.key === "Enter") {
+      handleApply();
+    }
+    if (event.key === "Escape") {
+      onCancel();
+    }
+  };
 
-	const handleApply = () => {
-		onApply(editValue);
-	};
+  const handleApply = () => {
+    onApply(editValue);
+  };
 
-	return {
-		editValue,
-		handleInputChange,
-		handleInputKeyDown,
-		handleApply,
-	};
+  return {
+    editValue,
+    handleInputChange,
+    handleInputKeyDown,
+    handleApply,
+  };
 };

@@ -1,15 +1,15 @@
 import {
-	EditorDataLine,
-	EditorLineValue,
-} from '../../../../types/EditorData.ts';
+  EditorDataLine,
+  EditorLineValue,
+} from "../../../../types/EditorData.ts";
 
 export type NewValueHandler<T> = (newValue: T) => void;
 
 export type ConcreteLineProps<T extends EditorLineValue = EditorLineValue> = {
   data: EditorDataLine<T>;
-	onAddLine: () => void;
-	onChange: NewValueHandler<T>;
-	onDelete: () => void;
+  onAddLine: () => void;
+  onChange: NewValueHandler<T>;
+  onDelete: () => void;
 };
 
 export type EditLineProps<T> = {
@@ -18,7 +18,7 @@ export type EditLineProps<T> = {
   isEdit: boolean;
   onApply: (newValue: T) => void;
   onCancel: () => void;
-	onDelete: () => void;
+  onDelete: () => void;
 };
 
 export type StringInputElement = HTMLInputElement | HTMLTextAreaElement;

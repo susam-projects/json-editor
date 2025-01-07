@@ -1,5 +1,5 @@
-import React from 'react';
-import { textEn } from '../../../../../../text';
+import React from "react";
+import { textEn } from "../../../../../../text";
 
 type TextareaEditorProps = {
   editValue: string;
@@ -8,14 +8,20 @@ type TextareaEditorProps = {
 };
 
 export const TextareaEditor: React.FC<TextareaEditorProps> = ({
-	editValue, onInputKeyDown, onInputChange,
+  editValue,
+  onInputKeyDown,
+  onInputChange,
 }) => {
-	return (
-		<td
-			className="editor-table__field__edit-value"
-			aria-label={textEn.editorPage.editorTable.lineInputLabel}
-		>
-			<textarea value={editValue} onChange={onInputChange} onKeyDown={onInputKeyDown} />
-		</td>
-	);
+  return (
+    <td
+      className="editor-table__field__edit-value"
+      aria-label={textEn.editorPage.editorTable.lineInputLabel}
+    >
+      <textarea
+        value={editValue}
+        onChange={onInputChange}
+        onKeyDown={onInputKeyDown}
+      />
+    </td>
+  );
 };

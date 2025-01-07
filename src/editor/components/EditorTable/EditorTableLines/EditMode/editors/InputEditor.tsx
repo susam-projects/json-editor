@@ -1,5 +1,5 @@
-import React, { HTMLInputTypeAttribute } from 'react';
-import { textEn } from '../../../../../../text';
+import React, { HTMLInputTypeAttribute } from "react";
+import { textEn } from "../../../../../../text";
 
 type InputEditorProps = {
   inputType: HTMLInputTypeAttribute;
@@ -9,14 +9,22 @@ type InputEditorProps = {
 };
 
 export const InputEditor: React.FC<InputEditorProps> = ({
-	inputType, editValue, onInputKeyDown, onInputChange,
+  inputType,
+  editValue,
+  onInputKeyDown,
+  onInputChange,
 }) => {
-	return (
-		<td
-			className="editor-table__field__edit-value"
-			aria-label={textEn.editorPage.editorTable.lineInputLabel}
-		>
-			<input type={inputType} value={editValue} onChange={onInputChange} onKeyDown={onInputKeyDown} />
-		</td>
-	);
+  return (
+    <td
+      className="editor-table__field__edit-value"
+      aria-label={textEn.editorPage.editorTable.lineInputLabel}
+    >
+      <input
+        type={inputType}
+        value={editValue}
+        onChange={onInputChange}
+        onKeyDown={onInputKeyDown}
+      />
+    </td>
+  );
 };
