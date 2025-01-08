@@ -21,7 +21,7 @@ export const textEn = {
     addLineModal: {
       title: "Add new line",
       disclaimer:
-        "Note: This modal is implemented in the simplest way (without validation, without different input types), because I thought it wasn't a required part of the task.",
+        "Note: This modal is implemented in the simplest way (without validation, without different input types), because it looked like it's wasn't a required part of the task.",
       typeLabel: "Type",
       typePlaceholder: "String, Number, etc.",
       labelLabel: "Label",
