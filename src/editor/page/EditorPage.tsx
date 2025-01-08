@@ -35,12 +35,14 @@ import {
 import { SetState } from "../../utils/utilityTypes.ts";
 import jsonSample from "../data/json-10000.json";
 
+const JSON_DATA = objectsToEditorData(
+  jsonSample as Array<Record<string, unknown>>,
+);
+
 const useJsonData = () => {
   const [notificationApi, notificationContextHolder] =
     notification.useNotification();
-  const [data, setData] = React.useState(
-    objectsToEditorData(jsonSample as Array<Record<string, unknown>>),
-  );
+  const [data, setData] = React.useState(JSON_DATA);
 
   const {
     isOpen: isSetDataModalOpen,
