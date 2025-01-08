@@ -12,12 +12,14 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.5.1",
+    "@reduxjs/toolkit": "^2.5.0",
     "antd": "^5.21.5",
     "antd-style": "^3.7.1",
     "dayjs": "^1.11.13",
     "lodash": "^4.17.21",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-redux": "^9.2.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.14",

@@ -9,7 +9,6 @@ import { Page } from "../../layout";
 import { useStyles } from "./EditorPage.styles.ts";
 import { textEn } from "../../text";
 import { SetDataModal } from "../components/SetDataModal/SetDataModal.tsx";
-import { objectsToEditorData } from "../service/dataMapper.service.ts";
 import {
   confirmDeleteLine,
   confirmDeleteRow,
@@ -19,30 +18,27 @@ import {
   ChangeLineHandler,
   DeleteLineHandler,
 } from "../components/EditorList/EditorListLine/EditorListLine.tsx";
-import {
-  addLine,
-  addRow,
-  deleteLine,
-  deleteRow,
-  updateLineValue,
-} from "../service/dataUpdater.service.ts";
-import { EditorData } from "../types/EditorData.ts";
 import { useModal } from "../../utils/useModal.ts";
 import {
   AddLineModal,
   AddLineModalOkHandler,
 } from "../components/AddLineModal/AddLineModal.tsx";
-import { SetState } from "../../utils/utilityTypes.ts";
-import jsonSample from "../data/json-10000.json";
-
-const JSON_DATA = objectsToEditorData(
-  jsonSample as Array<Record<string, unknown>>,
-);
+import { useAppDispatch, useAppSelector } from "../../app/store";
+import {
+  addLine,
+  addRow,
+  deleteLine,
+  deleteRow,
+  selectEditorData,
+  setData,
+  updateLine,
+} from "../store/editorPageSlice.ts";
 
 const useJsonData = () => {
   const [notificationApi, notificationContextHolder] =
     notification.useNotification();
-  const [data, setData] = React.useState(JSON_DATA);
+  const dispatch = useAppDispatch();
+  const data = useAppSelector(selectEditorData);
 
   const {
     isOpen: isSetDataModalOpen,
@@ -59,15 +55,12 @@ const useJsonData = () => {
       const newDataObjects: unknown = JSON.parse(newData);
       if (Array.isArray(newDataObjects)) {
         // should be properly checked, but making it simple for this test task
-        const newEditorData = objectsToEditorData(
-          newDataObjects as Array<Record<string, unknown>>,
-        );
-        setData(newEditorData);
+        dispatch(setData({ newDataObjects }));
       }
-    } catch (err) {
+    } catch (error) {
       notificationApi.error({
         message: textEn.editorPage.error.errorParsingData,
-        description: String(err),
+        description: String(error),
       });
     }
     closeSetDataModal();
@@ -75,7 +68,6 @@ const useJsonData = () => {
 
   return {
     data,
-    setData,
     isSetDataModalOpen,
     openSetDataModal,
     handleSetDataCancel,
@@ -84,7 +76,8 @@ const useJsonData = () => {
   };
 };
 
-const useAddLineModal = (setData: SetState<EditorData>) => {
+const useAddLineModal = () => {
+  const dispatch = useAppDispatch();
   const [rowIndex, setRowIndex] = React.useState(-1);
   const [prevLineIndex, setPrevLineIndex] = React.useState(-1);
 
@@ -95,9 +88,7 @@ const useAddLineModal = (setData: SetState<EditorData>) => {
   };
 
   const handleAddModalOk: AddLineModalOkHandler = (data) => {
-    setData((prevData) => {
-      return addLine(prevData, rowIndex, prevLineIndex, data);
-    });
+    dispatch(addLine({ rowIndex, prevLineIndex, data }));
     close();
   };
 
@@ -120,19 +111,15 @@ const useAddLineModal = (setData: SetState<EditorData>) => {
 
 type OpenAddLineModal = ReturnType<typeof useAddLineModal>["openAddLineModal"];
 
-const useJsonEditor = (
-  setData: SetState<EditorData>,
-  openAddLineModal: OpenAddLineModal,
-) => {
+const useJsonEditor = (openAddLineModal: OpenAddLineModal) => {
+  const dispatch = useAppDispatch();
   const [modal, modalContextHolder] = Modal.useModal();
 
   const handleAddRow = React.useCallback<AddRowHandler>(
     (prevRowIndex) => {
-      setData((prevData) => {
-        return addRow(prevData, prevRowIndex);
-      });
+      dispatch(addRow({ prevRowIndex }));
     },
-    [setData],
+    [dispatch],
   );
 
   const handleDeleteRow = React.useCallback<DeleteRowHandler>(
@@ -141,15 +128,13 @@ const useJsonEditor = (
         confirmDeleteRow(modal, {
           rowIndex,
           onOk: () => {
-            setData((prevData) => {
-              return deleteRow(prevData, rowIndex);
-            });
+            dispatch(deleteRow({ rowIndex }));
             resolve();
           },
         });
       });
     },
-    [modal, setData],
+    [dispatch, modal],
   );
 
   const handleAddLine = React.useCallback<AddLineHandler>(
@@ -161,11 +146,9 @@ const useJsonEditor = (
 
   const handleLineChange = React.useCallback<ChangeLineHandler>(
     (rowIndex, lineIndex, newValue) => {
-      setData((prevData) => {
-        return updateLineValue(prevData, rowIndex, lineIndex, newValue);
-      });
+      dispatch(updateLine({ rowIndex, lineIndex, newValue }));
     },
-    [setData],
+    [dispatch],
   );
 
   const handleDeleteLine = React.useCallback<DeleteLineHandler>(
@@ -174,13 +157,11 @@ const useJsonEditor = (
         rowIndex,
         lineIndex,
         onOk: () => {
-          setData((prevData) => {
-            return deleteLine(prevData, rowIndex, lineIndex);
-          });
+          dispatch(deleteLine({ rowIndex, lineIndex }));
         },
       });
     },
-    [modal, setData],
+    [dispatch, modal],
   );
 
   return {
@@ -198,7 +179,6 @@ export const EditorPage: React.FC = () => {
 
   const {
     data,
-    setData,
     isSetDataModalOpen,
     openSetDataModal,
     handleSetDataCancel,
@@ -211,7 +191,7 @@ export const EditorPage: React.FC = () => {
     handleAddModalCancel,
     handleAddModalOk,
     openAddLineModal,
-  } = useAddLineModal(setData);
+  } = useAddLineModal();
 
   const {
     handleAddRow,
@@ -220,7 +200,7 @@ export const EditorPage: React.FC = () => {
     handleLineChange,
     handleDeleteLine,
     modalContextHolder,
-  } = useJsonEditor(setData, openAddLineModal);
+  } = useJsonEditor(openAddLineModal);
 
   return (
     <Page>

@@ -1,14 +1,18 @@
 import React from "react";
+import { Provider } from "react-redux";
 import { ConfigProvider } from "antd";
-import { EditorPage } from "../editor";
 import { theme } from "./theme.ts";
+import { store } from "./store";
+import { EditorPage } from "../editor";
 
 import "antd/dist/reset.css";
 
 export const App: React.FC = () => {
   return (
-    <ConfigProvider theme={theme}>
-      <EditorPage />
-    </ConfigProvider>
+    <Provider store={store}>
+      <ConfigProvider theme={theme}>
+        <EditorPage />
+      </ConfigProvider>
+    </Provider>
   );
 };

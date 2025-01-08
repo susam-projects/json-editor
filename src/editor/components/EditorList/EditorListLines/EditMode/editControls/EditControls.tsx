@@ -14,7 +14,7 @@ export const EditControls: React.FC<EditControlsProps> = ({
   onDelete,
 }) => {
   return (
-    <td className="editor-list__field__controls">
+    <div className="editor-list__field__controls">
       <Space>
         <button
           type="button"
@@ -38,6 +38,6 @@ export const EditControls: React.FC<EditControlsProps> = ({
           {textEn.app.cancel}
         </button>
       </Space>
-    </td>
+    </div>
   );
 };

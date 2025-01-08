@@ -12,12 +12,12 @@ export const TextareaEditor: React.FC<TextareaEditorProps> = ({
   onInputChange,
 }) => {
   return (
-    <td className="editor-list__field__edit-value">
+    <div className="editor-list__field__edit-value">
       <textarea
         value={editValue}
         onChange={onInputChange}
         onKeyDown={onInputKeyDown}
       />
-    </td>
+    </div>
   );
 };
