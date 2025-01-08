@@ -125,13 +125,13 @@ function useItemHeights<T>({
   };
 }
 
-function useViewport<T>(
+function useListViewport<T>(
   { data, bufferSize, scrollThreshold }: Required<VirtualTableProps<T>>,
-  listHeight: number,
   itemHeights: number[],
 ) {
   const listRef = React.useRef<HTMLDivElement>(null);
   const lastScrollPosition = React.useRef(0);
+  const [listHeight, setListHeight] = React.useState(0);
   const [startIndex, setStartIndex] = React.useState(0);
   const [endIndex, setEndIndex] = React.useState(0);
 
@@ -187,9 +187,11 @@ function useViewport<T>(
   }, [scrollThreshold, updateVisibleItems]);
 
   return {
+    listRef,
+    listHeight,
+    setListHeight,
     startIndex,
     endIndex,
-    listRef,
   };
 }
 
@@ -222,15 +224,10 @@ export function WindowScrollVirtualList<T>(props: VirtualTableProps<T>) {
 
   const { styles } = useStyles();
 
-  const [listHeight, setListHeight] = React.useState(0);
-
   const { itemHeights, handleItemResize } = useItemHeights(processedProps);
 
-  const { listRef, startIndex, endIndex } = useViewport(
-    processedProps,
-    listHeight,
-    itemHeights,
-  );
+  const { listRef, listHeight, setListHeight, startIndex, endIndex } =
+    useListViewport(processedProps, itemHeights);
 
   const { renderedItemsOffset } = useListDimensions(
     setListHeight,
