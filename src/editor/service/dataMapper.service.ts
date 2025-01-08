@@ -6,7 +6,7 @@ import {
 } from "../types/EditorData.ts";
 import isPlainObject from "lodash/isPlainObject";
 import dayjs from "dayjs";
-import { DATA_DATE_FORMAT } from "../const/dateConst.ts";
+import { DATA_DATE_FORMAT, DATA_DATE_REGEXP } from "../const/dateConst.ts";
 
 export const objectsToEditorData = (
   objects: Array<Record<string, unknown>>,
@@ -93,7 +93,10 @@ const isEmail = (line: LineInfo): line is LineInfo & { value: string } => {
 };
 
 const isDate = (line: LineInfo) => {
-  return dayjs(String(line.value), DATA_DATE_FORMAT).isValid();
+  return (
+    DATA_DATE_REGEXP.test(String(line.value)) &&
+    dayjs(String(line.value), DATA_DATE_FORMAT).isValid()
+  );
 };
 
 const isBoolean = (line: LineInfo): line is LineInfo & { value: boolean } => {
