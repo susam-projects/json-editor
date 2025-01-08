@@ -65,10 +65,6 @@ const EditorListLine_: React.FC<EditorLineProps> = ({
     onDelete(rowIndex, lineIndex);
   };
 
-  if (!data.isVisible) {
-    return null;
-  }
-
   const LineComponent = LINE_COMPONENTS[data.type];
   if (LineComponent) {
     return (

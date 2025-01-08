@@ -1,5 +1,6 @@
 import {
   EditorData,
+  EditorDataLine,
   EditorDataLineType,
   EditorLineValue,
 } from "../types/EditorData.ts";
@@ -26,8 +27,7 @@ export const objectsToEditorData = (
             type: lineType,
             label,
             value: value as EditorLineValue,
-            isVisible: true,
-          };
+          } satisfies EditorDataLine;
         })
         .filter((line) => !!line); // skip unknown data lines
     })

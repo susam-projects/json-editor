@@ -51,3 +51,26 @@ export const getViewportHeight = (
   }
   return windowHeight;
 };
+
+export const getOptimalBufferSize = (
+  estimatedItemHeight: number,
+  dataLength: number,
+  minBufferSize: number,
+  maxBufferSize: number,
+) => {
+  const itemsOnTheScreen = Math.round(window.innerHeight / estimatedItemHeight);
+  const bufferSizeOptimalForFastScrolling = Math.round(
+    0.01 * itemsOnTheScreen * dataLength,
+  );
+  return Math.max(
+    Math.min(bufferSizeOptimalForFastScrolling, maxBufferSize),
+    minBufferSize,
+  );
+};
+
+export const getOptimalScrollThreshold = (
+  estimatedItemHeight: number,
+  bufferSize: number,
+) => {
+  return (estimatedItemHeight * bufferSize) / 2;
+};

@@ -1,6 +1,6 @@
 import type { Action, ThunkAction } from "@reduxjs/toolkit";
 import { combineSlices, configureStore } from "@reduxjs/toolkit";
-import { editorPageSlice } from "../../editor/store/editorPageSlice.ts";
+import { editorPageSlice } from "../../editor/store/editorPage.slice.ts";
 
 const rootReducer = combineSlices(editorPageSlice);
 export type RootState = ReturnType<typeof rootReducer>;

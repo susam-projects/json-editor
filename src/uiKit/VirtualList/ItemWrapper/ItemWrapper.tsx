@@ -1,4 +1,4 @@
-import { WithChildren } from "../../utils/utilityTypes.ts";
+import { WithChildren } from "../../../utils/utilityTypes.ts";
 import React from "react";
 
 type ItemWrapperProps = {

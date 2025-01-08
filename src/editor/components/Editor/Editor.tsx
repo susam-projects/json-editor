@@ -1,9 +1,10 @@
 import React from "react";
-import noop from "lodash/noop";
 import {
   ListItemProps,
   WindowScrollVirtualList,
-} from "../../../uiKit/VirtualList/WindowScrollVirtualList.tsx";
+  getOptimalBufferSize,
+  getOptimalScrollThreshold,
+} from "../../../uiKit/VirtualList";
 import {
   EditorData,
   EditorDataLine,
@@ -19,10 +20,9 @@ import { AddRowButton } from "../EditorList/AddRowButton/AddRowButton.tsx";
 import { RowControls } from "../EditorList/RowControls/RowControls.tsx";
 import { EditorList } from "../EditorList/EditorList/EditorList.tsx";
 import { EditorListRow } from "../EditorList/EditorListRow/EditorListRow.tsx";
-import { useVirtualListController } from "../../../uiKit/VirtualList/useVirtualListController.ts";
 
 export type AddRowHandler = (prevRowIndex: number) => void;
-export type DeleteRowHandler = (rowIndex: number) => Promise<void>;
+export type DeleteRowHandler = (rowIndex: number) => void;
 
 type EditorProps = {
   data: EditorData;
@@ -34,7 +34,7 @@ type EditorProps = {
 };
 
 const getRowKey = (row: EditorDataRow, rowIndex: number) => {
-  return `${row[0]?.value} ${rowIndex}`;
+  return `${row[0]?.value || rowIndex}`;
 };
 
 const getLineKey = (
@@ -53,8 +53,6 @@ const EditorComponent: React.FC<EditorProps> = ({
   onChangeLine,
   onDeleteLine,
 }) => {
-  const virtualListController = useVirtualListController();
-
   const handleAddFirstLine = React.useCallback(
     (rowIndex: number) => {
       onAddLine(rowIndex, -1);
@@ -62,26 +60,7 @@ const EditorComponent: React.FC<EditorProps> = ({
     [onAddLine],
   );
 
-  const handleAddRow = React.useCallback<AddRowHandler>(
-    (prevRowIndex) => {
-      onAddRow(prevRowIndex);
-      virtualListController.current?.addItemAfter(prevRowIndex);
-    },
-    [onAddRow, virtualListController],
-  );
-
-  const handleDeleteRow = React.useCallback(
-    (rowIndex: number) => {
-      onDeleteRow(rowIndex)
-        .then(() => {
-          virtualListController.current?.removeItem(rowIndex);
-        })
-        .catch(noop);
-    },
-    [onDeleteRow, virtualListController],
-  );
-
-  const ListItem_ = React.useMemo(() => {
+  const ListItem = React.useMemo(() => {
     const DataRow: React.FC<ListItemProps<EditorDataRow>> = ({
       item: row,
       itemIndex: rowIndex,
@@ -91,7 +70,7 @@ const EditorComponent: React.FC<EditorProps> = ({
           <RowControls
             rowIndex={rowIndex}
             onAddFirstLineClick={handleAddFirstLine}
-            onDeleteRowClick={handleDeleteRow}
+            onDeleteRowClick={onDeleteRow}
           />
           <EditorListRow>
             {row.map((line, lineIndex) => (
@@ -107,10 +86,10 @@ const EditorComponent: React.FC<EditorProps> = ({
             ))}
           </EditorListRow>
           {rowIndex === data.length - 1 ? (
-            <AddRowButton rowIndex={rowIndex} onClick={handleAddRow} />
+            <AddRowButton rowIndex={rowIndex} onClick={onAddRow} />
           ) : (
             <EditorListRow>
-              <AddRowButton rowIndex={rowIndex} onClick={handleAddRow} />
+              <AddRowButton rowIndex={rowIndex} onClick={onAddRow} />
             </EditorListRow>
           )}
         </>
@@ -121,36 +100,39 @@ const EditorComponent: React.FC<EditorProps> = ({
   }, [
     data.length,
     handleAddFirstLine,
-    handleAddRow,
-    handleDeleteRow,
+    onAddRow,
+    onDeleteRow,
     onAddLine,
     onChangeLine,
     onDeleteLine,
   ]);
 
-  const getItemKey_ = (itemIndex: number) => {
-    return getRowKey(data[itemIndex], itemIndex);
-  };
-  const getItemKey = React.useCallback(getItemKey_, [data]);
-
   const estimatedItemHeight = 550;
-  // const bufferSize = Math.min(Math.round(0.02 * data.length), 30);
-  const bufferSize = 5;
-  const scrollThreshold = (estimatedItemHeight * bufferSize) / 2;
+  const minBufferSize = 5;
+  const maxBufferSize = 30;
+  const bufferSize = getOptimalBufferSize(
+    estimatedItemHeight,
+    data.length,
+    minBufferSize,
+    maxBufferSize,
+  );
+  const scrollThreshold = getOptimalScrollThreshold(
+    estimatedItemHeight,
+    bufferSize,
+  );
 
   return (
     <EditorList>
       <EditorListRow>
-        <AddRowButton rowIndex={-1} onClick={handleAddRow} />
+        <AddRowButton rowIndex={-1} onClick={onAddRow} />
       </EditorListRow>
       <WindowScrollVirtualList
         data={data}
         estimatedItemHeight={estimatedItemHeight}
         bufferSize={bufferSize}
         scrollThreshold={scrollThreshold}
-        ListItem={ListItem_}
-        getItemKey={getItemKey}
-        controller={virtualListController}
+        ListItem={ListItem}
+        getItemKey={getRowKey}
       />
     </EditorList>
   );

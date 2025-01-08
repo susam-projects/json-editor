@@ -32,7 +32,7 @@ import {
   selectEditorData,
   setData,
   updateLine,
-} from "../store/editorPageSlice.ts";
+} from "../store/editorPage.slice.ts";
 import { downloadEditorData } from "../service/dataDownloader.service.ts";
 
 const useJsonData = () => {
@@ -130,14 +130,11 @@ const useJsonEditor = (openAddLineModal: OpenAddLineModal) => {
 
   const handleDeleteRow = React.useCallback<DeleteRowHandler>(
     (rowIndex) => {
-      return new Promise((resolve) => {
-        confirmDeleteRow(modal, {
-          rowIndex,
-          onOk: () => {
-            dispatch(deleteRow({ rowIndex }));
-            resolve();
-          },
-        });
+      confirmDeleteRow(modal, {
+        rowIndex,
+        onOk: () => {
+          dispatch(deleteRow({ rowIndex }));
+        },
       });
     },
     [dispatch, modal],

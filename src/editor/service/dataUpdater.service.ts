@@ -40,7 +40,6 @@ export const addLine = (
 ): EditorData => {
   const newLine: EditorDataLine = {
     ...newLineData,
-    isVisible: true,
   };
 
   return prevData.reduce<EditorData>((result, row, currentRowIndex) => {

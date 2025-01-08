@@ -1,7 +1,6 @@
 import { createAppSlice } from "../../app/store";
 import { objectsToEditorData } from "../service/dataMapper.service.ts";
 import { EditorData, EditorLineValue } from "../types/EditorData.ts";
-import jsonSample from "../data/json-10000.json";
 import {
   addLine as doAddLine,
   addRow as doAddRow,
@@ -10,6 +9,7 @@ import {
   updateLineValue as doUpdateLineValue,
 } from "../service/dataUpdater.service.ts";
 import { AddLineData } from "../components/AddLineModal/AddLineModal.tsx";
+import jsonSample from "../data/json-10000.json";
 
 export interface IEditorSlice {
   data: EditorData;
