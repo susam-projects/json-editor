@@ -1,5 +1,6 @@
 import React from "react";
 import sum from "lodash/sum";
+import get from "lodash/get";
 import { ItemWrapper } from "../ItemWrapper/ItemWrapper.tsx";
 import {
   findVisibleEnd,
@@ -25,19 +26,26 @@ export type ListItemProps<T> = {
 
 type KeysRecord = Record<string, number>;
 
-const DEFAULT_GET_ITEM_KEY = (_: unknown, itemIndex: number) => itemIndex;
-const DEFAULT_BUFFER_SIZE = 5;
-const DEFAULT_SCROLL_THRESHOLD = 100;
-const DEFAULT_ESTIMATED_ITEM_HEIGHT = 100;
+function ensureDefaultProps<T>(
+  props: VirtualTableProps<T>,
+): Required<VirtualTableProps<T>> {
+  return {
+    ...props,
+    getItemKey: get(props, "getItemKey", (_, itemIndex) => itemIndex),
+    estimatedItemHeight: get(props, "estimatedItemHeight", 100),
+    bufferSize: get(props, "bufferSize", 5),
+    scrollThreshold: get(props, "scrollThreshold", 100),
+  };
+}
 
 /**
  * Have to track height of each item since the real height can differ and even change
  */
 function useItemHeights<T>({
   data,
-  getItemKey = DEFAULT_GET_ITEM_KEY,
-  estimatedItemHeight = DEFAULT_ESTIMATED_ITEM_HEIGHT,
-}: VirtualTableProps<T>) {
+  getItemKey,
+  estimatedItemHeight,
+}: Required<VirtualTableProps<T>>) {
   const prevKeysRef = React.useRef<KeysRecord>({});
   const [itemHeights, setItemHeights] = React.useState<number[]>([]);
 
@@ -97,18 +105,28 @@ function useItemHeights<T>({
     updateItemHeights();
   }, [updateItemHeights]);
 
+  const handleItemResize_ = (index: number, height: number) => {
+    setItemHeights((prev) => {
+      if (prev[index] !== height) {
+        const newHeights = [...prev];
+        newHeights[index] = height;
+        return newHeights;
+      }
+      return prev;
+    });
+  };
+  const handleItemResize = React.useCallback(handleItemResize_, [
+    setItemHeights,
+  ]);
+
   return {
     itemHeights,
-    setItemHeights,
+    handleItemResize,
   };
 }
 
 function useViewport<T>(
-  {
-    data,
-    bufferSize = DEFAULT_BUFFER_SIZE,
-    scrollThreshold = DEFAULT_SCROLL_THRESHOLD,
-  }: VirtualTableProps<T>,
+  { data, bufferSize, scrollThreshold }: Required<VirtualTableProps<T>>,
   listHeight: number,
   itemHeights: number[],
 ) {
@@ -179,7 +197,6 @@ function useListDimensions(
   setListHeight: SetState<number>,
   itemHeights: number[],
   startIndex: number,
-  setItemHeights: SetState<number[]>,
 ) {
   const [renderedItemsOffset, setRenderedItemsOffset] = React.useState(0);
 
@@ -194,46 +211,31 @@ function useListDimensions(
     setRenderedItemsOffset(itemsOffset);
   }, [itemHeights, startIndex]);
 
-  const handleItemResize_ = (index: number, height: number) => {
-    setItemHeights((prev) => {
-      if (prev[index] !== height) {
-        const newHeights = [...prev];
-        newHeights[index] = height;
-        return newHeights;
-      }
-      return prev;
-    });
-  };
-  const handleItemResize = React.useCallback(handleItemResize_, [
-    setItemHeights,
-  ]);
-
   return {
     renderedItemsOffset,
-    handleItemResize,
   };
 }
 
 export function WindowScrollVirtualList<T>(props: VirtualTableProps<T>) {
-  const { data, ListItem, getItemKey = DEFAULT_GET_ITEM_KEY } = props;
+  const processedProps = ensureDefaultProps(props);
+  const { data, ListItem, getItemKey } = processedProps;
 
   const { styles } = useStyles();
 
   const [listHeight, setListHeight] = React.useState(0);
 
-  const { itemHeights, setItemHeights } = useItemHeights(props);
+  const { itemHeights, handleItemResize } = useItemHeights(processedProps);
 
   const { listRef, startIndex, endIndex } = useViewport(
-    props,
+    processedProps,
     listHeight,
     itemHeights,
   );
 
-  const { renderedItemsOffset, handleItemResize } = useListDimensions(
+  const { renderedItemsOffset } = useListDimensions(
     setListHeight,
     itemHeights,
     startIndex,
-    setItemHeights,
   );
 
   return (
