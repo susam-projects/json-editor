@@ -18,7 +18,7 @@ import {
   AddLineHandler,
   ChangeLineHandler,
   DeleteLineHandler,
-} from "../components/EditorTable/EditorTableLine/EditorTableLine.tsx";
+} from "../components/EditorList/EditorListLine/EditorListLine.tsx";
 import {
   addLine,
   addRow,
@@ -33,12 +33,14 @@ import {
   AddLineModalOkHandler,
 } from "../components/AddLineModal/AddLineModal.tsx";
 import { SetState } from "../../utils/utilityTypes.ts";
-import jsonSample from "../data/json-1000.json";
+import jsonSample from "../data/json-10000.json";
 
 const useJsonData = () => {
   const [notificationApi, notificationContextHolder] =
     notification.useNotification();
-  const [data, setData] = React.useState(objectsToEditorData(jsonSample));
+  const [data, setData] = React.useState(
+    objectsToEditorData(jsonSample as Array<Record<string, unknown>>),
+  );
 
   const {
     isOpen: isSetDataModalOpen,
@@ -133,13 +135,16 @@ const useJsonEditor = (
 
   const handleDeleteRow = React.useCallback<DeleteRowHandler>(
     (rowIndex) => {
-      confirmDeleteRow(modal, {
-        rowIndex,
-        onOk: () => {
-          setData((prevData) => {
-            return deleteRow(prevData, rowIndex);
-          });
-        },
+      return new Promise((resolve) => {
+        confirmDeleteRow(modal, {
+          rowIndex,
+          onOk: () => {
+            setData((prevData) => {
+              return deleteRow(prevData, rowIndex);
+            });
+            resolve();
+          },
+        });
       });
     },
     [modal, setData],

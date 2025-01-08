@@ -1,22 +1,28 @@
 import React from "react";
+import noop from "lodash/noop";
 import {
-  AddLineHandler,
-  ChangeLineHandler,
-  DeleteLineHandler,
-  EditorTableLine,
-} from "../EditorTable/EditorTableLine/EditorTableLine.tsx";
-import { EditorTableRow } from "../EditorTable/EditorTableRow/EditorTableRow.tsx";
+  ListItemProps,
+  WindowScrollVirtualList,
+} from "../../../uiKit/VirtualList/WindowScrollVirtualList.tsx";
 import {
   EditorData,
   EditorDataLine,
   EditorDataRow,
 } from "../../types/EditorData.ts";
-import { EditorTable } from "../EditorTable/EditorTable/EditorTable.tsx";
-import { AddRowButton } from "../EditorTable/AddRowButton/AddRowButton.tsx";
-import { RowControls } from "../EditorTable/RowControls/RowControls.tsx";
+import {
+  AddLineHandler,
+  ChangeLineHandler,
+  DeleteLineHandler,
+  EditorListLine,
+} from "../EditorList/EditorListLine/EditorListLine.tsx";
+import { AddRowButton } from "../EditorList/AddRowButton/AddRowButton.tsx";
+import { RowControls } from "../EditorList/RowControls/RowControls.tsx";
+import { EditorList } from "../EditorList/EditorList/EditorList.tsx";
+import { EditorListRow } from "../EditorList/EditorListRow/EditorListRow.tsx";
+import { useVirtualListController } from "../../../uiKit/VirtualList/useVirtualListController.ts";
 
 export type AddRowHandler = (prevRowIndex: number) => void;
-export type DeleteRowHandler = (rowIndex: number) => void;
+export type DeleteRowHandler = (rowIndex: number) => Promise<void>;
 
 type EditorProps = {
   data: EditorData;
@@ -47,6 +53,8 @@ const EditorComponent: React.FC<EditorProps> = ({
   onChangeLine,
   onDeleteLine,
 }) => {
+  const virtualListController = useVirtualListController();
+
   const handleAddFirstLine = React.useCallback(
     (rowIndex: number) => {
       onAddLine(rowIndex, -1);
@@ -54,19 +62,40 @@ const EditorComponent: React.FC<EditorProps> = ({
     [onAddLine],
   );
 
-  return (
-    <EditorTable>
-      <AddRowButton rowIndex={-1} onClick={onAddRow} />
-      {data.map((row, rowIndex) => (
-        <React.Fragment key={getRowKey(row, rowIndex)}>
+  const handleAddRow = React.useCallback<AddRowHandler>(
+    (prevRowIndex) => {
+      onAddRow(prevRowIndex);
+      virtualListController.current?.addItemAfter(prevRowIndex);
+    },
+    [onAddRow, virtualListController],
+  );
+
+  const handleDeleteRow = React.useCallback(
+    (rowIndex: number) => {
+      onDeleteRow(rowIndex)
+        .then(() => {
+          virtualListController.current?.removeItem(rowIndex);
+        })
+        .catch(noop);
+    },
+    [onDeleteRow, virtualListController],
+  );
+
+  const ListItem_ = React.useMemo(() => {
+    const DataRow: React.FC<ListItemProps<EditorDataRow>> = ({
+      item: row,
+      itemIndex: rowIndex,
+    }) => {
+      return (
+        <>
           <RowControls
             rowIndex={rowIndex}
             onAddFirstLineClick={handleAddFirstLine}
-            onDeleteRowClick={onDeleteRow}
+            onDeleteRowClick={handleDeleteRow}
           />
-          <EditorTableRow>
+          <EditorListRow>
             {row.map((line, lineIndex) => (
-              <EditorTableLine
+              <EditorListLine
                 key={getLineKey(line, rowIndex, lineIndex)}
                 data={line}
                 rowIndex={rowIndex}
@@ -76,11 +105,54 @@ const EditorComponent: React.FC<EditorProps> = ({
                 onDelete={onDeleteLine}
               />
             ))}
-          </EditorTableRow>
-          <AddRowButton rowIndex={rowIndex} onClick={onAddRow} />
-        </React.Fragment>
-      ))}
-    </EditorTable>
+          </EditorListRow>
+          {rowIndex === data.length - 1 ? (
+            <AddRowButton rowIndex={rowIndex} onClick={handleAddRow} />
+          ) : (
+            <EditorListRow>
+              <AddRowButton rowIndex={rowIndex} onClick={handleAddRow} />
+            </EditorListRow>
+          )}
+        </>
+      );
+    };
+
+    return DataRow;
+  }, [
+    data.length,
+    handleAddFirstLine,
+    handleAddRow,
+    handleDeleteRow,
+    onAddLine,
+    onChangeLine,
+    onDeleteLine,
+  ]);
+
+  const getItemKey_ = (itemIndex: number) => {
+    return getRowKey(data[itemIndex], itemIndex);
+  };
+  const getItemKey = React.useCallback(getItemKey_, [data]);
+
+  const estimatedItemHeight = 550;
+  // const bufferSize = Math.min(Math.round(0.02 * data.length), 30);
+  const bufferSize = 5;
+  const scrollThreshold = (estimatedItemHeight * bufferSize) / 2;
+
+  return (
+    <EditorList>
+      <EditorListRow>
+        <AddRowButton rowIndex={-1} onClick={handleAddRow} />
+      </EditorListRow>
+      <WindowScrollVirtualList
+        data={data}
+        estimatedItemHeight={estimatedItemHeight}
+        bufferSize={bufferSize}
+        scrollThreshold={scrollThreshold}
+        ListItem={ListItem_}
+        getItemKey={getItemKey}
+        controller={virtualListController}
+      />
+    </EditorList>
   );
 };
 

@@ -41,11 +41,7 @@ export const textEn = {
       errorParsingData: "Error parsing data!",
       newLineValidationError: "Fill all the fields, please!",
     },
-    editorTable: {
-      labelColumn: "label column",
-      valueColumn: "value column",
-      buttonsColumn: "buttons column",
-      lineInputLabel: "input cell",
+    editorList: {
       booleanTrue: "True",
       booleanFalse: "False",
       addRowButton: "+ Add row",
