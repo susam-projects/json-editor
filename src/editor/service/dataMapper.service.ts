@@ -101,3 +101,14 @@ const isBoolean = (line: LineInfo): line is LineInfo & { value: boolean } => {
     (possibleValue) => possibleValue === line.value,
   );
 };
+
+export const editorDataToObjectsArray = (
+  data: EditorData,
+): Array<Record<string, EditorLineValue>> => {
+  return data.map((row) => {
+    return row.reduce<Record<string, EditorLineValue>>((result, line) => {
+      result[line.label] = line.value;
+      return result;
+    }, {});
+  });
+};

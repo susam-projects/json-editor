@@ -13,6 +13,7 @@ export const textEn = {
     subTitle:
       'Note: By default a hardcoded JSON is used. You can set any other one with the "Set JSON" button.',
     setDataButton: "Set JSON",
+    downloadDataButton: "Download JSON",
     setDataModal: {
       title: "Input JSON",
       placeholder: SET_DATA_INPUT_PLACEHOLDER,

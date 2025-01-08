@@ -33,6 +33,7 @@ import {
   setData,
   updateLine,
 } from "../store/editorPageSlice.ts";
+import { downloadEditorData } from "../service/dataDownloader.service.ts";
 
 const useJsonData = () => {
   const [notificationApi, notificationContextHolder] =
@@ -66,12 +67,17 @@ const useJsonData = () => {
     closeSetDataModal();
   };
 
+  const handleDownloadData = () => {
+    downloadEditorData(data);
+  };
+
   return {
     data,
     isSetDataModalOpen,
     openSetDataModal,
     handleSetDataCancel,
     handleSetData,
+    handleDownloadData,
     notificationContextHolder,
   };
 };
@@ -183,6 +189,7 @@ export const EditorPage: React.FC = () => {
     openSetDataModal,
     handleSetDataCancel,
     handleSetData,
+    handleDownloadData,
     notificationContextHolder,
   } = useJsonData();
 
@@ -217,9 +224,14 @@ export const EditorPage: React.FC = () => {
             {textEn.editorPage.subTitle}
           </Typography.Text>
         </Space>
-        <Button type="primary" onClick={openSetDataModal}>
-          {textEn.editorPage.setDataButton}
-        </Button>
+        <Space>
+          <Button type="primary" onClick={openSetDataModal}>
+            {textEn.editorPage.setDataButton}
+          </Button>
+          <Button onClick={handleDownloadData}>
+            {textEn.editorPage.downloadDataButton}
+          </Button>
+        </Space>
         <Editor
           data={data}
           onAddRow={handleAddRow}
