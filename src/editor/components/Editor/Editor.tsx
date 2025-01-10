@@ -1,4 +1,5 @@
 import React from "react";
+import { Virtuoso } from "react-virtuoso";
 import {
   ListItemProps,
   WindowScrollVirtualList,
@@ -20,6 +21,7 @@ import { AddRowButton } from "../EditorList/AddRowButton/AddRowButton.tsx";
 import { RowControls } from "../EditorList/RowControls/RowControls.tsx";
 import { EditorList } from "../EditorList/EditorList/EditorList.tsx";
 import { EditorListRow } from "../EditorList/EditorListRow/EditorListRow.tsx";
+import { ListType } from "./Editor.types.ts";
 
 export type AddRowHandler = (prevRowIndex: number) => void;
 export type DeleteRowHandler = (rowIndex: number) => void;
@@ -31,6 +33,7 @@ type EditorProps = {
   onAddLine: AddLineHandler;
   onChangeLine: ChangeLineHandler;
   onDeleteLine: DeleteLineHandler;
+  listType?: ListType;
 };
 
 const getRowKey = (row: EditorDataRow, rowIndex: number) => {
@@ -52,6 +55,7 @@ const EditorComponent: React.FC<EditorProps> = ({
   onAddLine,
   onChangeLine,
   onDeleteLine,
+  listType = ListType.Custom,
 }) => {
   const handleAddFirstLine = React.useCallback(
     (rowIndex: number) => {
@@ -107,6 +111,13 @@ const EditorComponent: React.FC<EditorProps> = ({
     onDeleteLine,
   ]);
 
+  const virtuosoItemRenderer = React.useCallback(
+    (index: number, item: EditorDataRow) => {
+      return <ListItem item={item} itemIndex={index} />;
+    },
+    [ListItem],
+  );
+
   const estimatedItemHeight = 550;
   const minBufferSize = 5;
   const maxBufferSize = 30;
@@ -120,6 +131,23 @@ const EditorComponent: React.FC<EditorProps> = ({
     estimatedItemHeight,
     bufferSize,
   );
+
+  if (listType === ListType.Virtuoso) {
+    return (
+      <EditorList>
+        <EditorListRow>
+          <AddRowButton rowIndex={-1} onClick={onAddRow} />
+        </EditorListRow>
+        <Virtuoso
+          useWindowScroll
+          data={data}
+          itemContent={virtuosoItemRenderer}
+          overscan={estimatedItemHeight * bufferSize}
+          increaseViewportBy={estimatedItemHeight * bufferSize}
+        />
+      </EditorList>
+    );
+  }
 
   return (
     <EditorList>

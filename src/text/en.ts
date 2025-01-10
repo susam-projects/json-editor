@@ -10,10 +10,17 @@ export const textEn = {
   },
   editorPage: {
     title: "JSON Editor",
-    subTitle:
-      'Note: By default a hardcoded JSON is used. You can set any other one with the "Set JSON" button.',
+    subTitle1:
+      'Note 1: By default a hardcoded JSON is used. Another one can be set with the "Set JSON" button.',
+    subTitle2:
+      "Note 2: Implemented 2 variants of list virtualization. You can choose which to use with the radio buttons.",
     setDataButton: "Set JSON",
     downloadDataButton: "Download JSON",
+    listType: {
+      label: "List type:",
+      custom: "Custom",
+      virtuoso: "NPM library",
+    },
     setDataModal: {
       title: "Input JSON",
       placeholder: SET_DATA_INPUT_PLACEHOLDER,

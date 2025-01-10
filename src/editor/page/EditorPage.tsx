@@ -4,7 +4,16 @@ import {
   DeleteRowHandler,
   Editor,
 } from "../components/Editor/Editor.tsx";
-import { Button, Modal, notification, Space, Typography } from "antd";
+import {
+  Button,
+  Flex,
+  Modal,
+  notification,
+  Radio,
+  RadioChangeEvent,
+  Space,
+  Typography,
+} from "antd";
 import { Page } from "../../layout";
 import { useStyles } from "./EditorPage.styles.ts";
 import { textEn } from "../../text";
@@ -34,6 +43,7 @@ import {
   updateLine,
 } from "../store/editorPage.slice.ts";
 import { downloadEditorData } from "../service/dataDownloader.service.ts";
+import { ListType } from "../components/Editor/Editor.types.ts";
 
 const useJsonData = () => {
   const [notificationApi, notificationContextHolder] =
@@ -79,6 +89,19 @@ const useJsonData = () => {
     handleSetData,
     handleDownloadData,
     notificationContextHolder,
+  };
+};
+
+const useListType = () => {
+  const [listType, setListType] = React.useState(ListType.Custom);
+
+  const handleListTypeChange = (event: RadioChangeEvent) => {
+    setListType(event.target.value);
+  };
+
+  return {
+    listType,
+    handleListTypeChange,
   };
 };
 
@@ -190,6 +213,8 @@ export const EditorPage: React.FC = () => {
     notificationContextHolder,
   } = useJsonData();
 
+  const { listType, handleListTypeChange } = useListType();
+
   const {
     isAddLineModalOpen,
     handleAddModalCancel,
@@ -218,17 +243,35 @@ export const EditorPage: React.FC = () => {
             {textEn.editorPage.title}
           </Typography.Title>
           <Typography.Text className={styles.subtitle}>
-            {textEn.editorPage.subTitle}
+            {textEn.editorPage.subTitle1}
+          </Typography.Text>
+          <Typography.Text className={styles.subtitle}>
+            {textEn.editorPage.subTitle2}
           </Typography.Text>
         </Space>
-        <Space>
-          <Button type="primary" onClick={openSetDataModal}>
-            {textEn.editorPage.setDataButton}
-          </Button>
-          <Button onClick={handleDownloadData}>
-            {textEn.editorPage.downloadDataButton}
-          </Button>
-        </Space>
+        <Flex justify="space-between">
+          <Space>
+            <Button type="primary" onClick={openSetDataModal}>
+              {textEn.editorPage.setDataButton}
+            </Button>
+            <Button onClick={handleDownloadData}>
+              {textEn.editorPage.downloadDataButton}
+            </Button>
+          </Space>
+          <Space size="middle">
+            <Typography.Text>
+              {textEn.editorPage.listType.label}
+            </Typography.Text>
+            <Radio.Group value={listType} onChange={handleListTypeChange}>
+              <Radio value={ListType.Custom}>
+                {textEn.editorPage.listType.custom}
+              </Radio>
+              <Radio value={ListType.Virtuoso}>
+                {textEn.editorPage.listType.virtuoso}
+              </Radio>
+            </Radio.Group>
+          </Space>
+        </Flex>
         <Editor
           data={data}
           onAddRow={handleAddRow}
@@ -236,6 +279,7 @@ export const EditorPage: React.FC = () => {
           onAddLine={handleAddLine}
           onChangeLine={handleLineChange}
           onDeleteLine={handleDeleteLine}
+          listType={listType}
         />
       </Space>
       <SetDataModal
