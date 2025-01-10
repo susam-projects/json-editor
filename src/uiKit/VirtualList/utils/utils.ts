@@ -1,3 +1,8 @@
+/**
+ * A possible optimization would be to use itemPositions instead of itemHeights,
+ * but looks like it's performant enough as it is. Especially, since we don't
+ * trigger the calculation too often thanks to scrollThreshold.
+ */
 export const findVisibleStart = (itemHeights: number[], scrollTop: number) => {
   let accumulatedHeight = 0;
   let visibleStart = 0;
